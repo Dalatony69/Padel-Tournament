@@ -1,0 +1,118 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App{
+  width: 100%;
+}
+/* Start Home Page !!!!!!!!!!!!!!!!! */
+
+.Home-page{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.Group-sec{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* background-color: aqua; */
+  padding: 2%;
+  gap: 20px;
+}
+.Group{
+  border: 2px solid black;
+  width: 45%;
+}
+.Group-row{
+  display: flex;
+  justify-content: space-around;
+}
+.Group-row div{
+  border: 1px solid black;
+  flex: 1;
+  text-align: center;
+}
+.Group-row div.name{
+  flex-grow: 2;
+}
+.show-data{
+  border: 2px solid red;
+}
+.show-data main{
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-around;
+}
+.show-data main .left-team,.right-team,.setting{
+  display: flex;
+}
+.knockout-sec{
+  border: 2px solid red;
+}
+.quarter-final .QF1,.QF2,.QF3,.QF4{
+  display: flex;
+}
+.Semi-final .LSF,.RSF{
+  display: flex;
+}
+.final .F{
+display: flex;
+}
+
+.lobby .holder{
+  border: 2px solid black;
+  width: 50%;
+}
+
+/* End Home Page !!!!!!!!!!!!!!!!!!! */
+
+/* Start Auth Page */
+.auth-page{
+  width: 100%;
+  height: 100vh;
+}
+.auth-page main{
+  display: grid;
+  place-items: center;
+}
+.card-holder{
+  border: 2px solid black;
+  width: 50%;
+  height: 70vh;
+  margin: 6% auto;
+}
+.sign-up-card,.login-card,.createteam-card,.jointeam-card{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 20px;
+  padding: 2%;
+}
+.sign-up-card input,button{
+  width: 50%;
+  margin: 0 auto;
+}
+.createteam-card input,button{
+  width: 50%;
+  margin: 0 auto;
+}
+/* End Auth Page */
+
+
+@media(max-width:425px){
+  .Group{
+    border: 2px solid black;
+    width: 100%;
+  }
+
+  .card-holder{
+    margin: 25% auto;
+  }
+  .sign-up-card input,button{
+    width: 100%;
+  }
+}
