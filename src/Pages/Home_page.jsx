@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../Components/Header";
 import GroupSec from "../Components/Groups_sec";
-import KnockoutSec from "../Components/Knockout_sec";
+// import KnockoutSec from "../Components/Knockout_sec";
 import "../App.css";
 
 function Home_page(){
@@ -10,7 +10,7 @@ function Home_page(){
         <div className="Home-page">
             <Header/>
             <GroupSec/>
-            <KnockoutSec/>
+            {/* <KnockoutSec/> */}
         </div>
     );
 }

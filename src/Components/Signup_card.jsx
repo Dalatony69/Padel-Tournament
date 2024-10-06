@@ -12,7 +12,7 @@ function Signup_card() {
 
     const WhereTo = useCallback(async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/WhereTo');
+            const response = await fetch('http://51.20.32.239:5000/WhereTo');
             const data = await response.json(); // Assuming the backend returns JSON
             if (data.message !== 'Lobby') {
                 navigate('/Lobby');
@@ -34,7 +34,7 @@ function Signup_card() {
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/HandleSignUp', {
+            const response = await fetch('http://51.20.32.239:5000/HandleSignUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -56,38 +56,42 @@ function Signup_card() {
 
     return (
         <div className="sign-up-card">
-            <span>Sign-up</span>
-            <input 
-                type="text" 
-                placeholder="Player 1 Username" 
-                value={UserName1} 
-                onChange={(e) => setUserName1(e.target.value)} 
-            />
-            <input 
-                type="text" 
-                placeholder="Player 1 Phone-Number" 
-                value={UserPhone1} 
-                onChange={(e) => setUserPhone1(e.target.value)} 
-            />
-            <input 
-                type="text" 
-                placeholder="Player 2 Username" 
-                value={UserName2} 
-                onChange={(e) => setUserName2(e.target.value)} 
-            />
-            <input 
-                type="text" 
-                placeholder="Player 2 Phone-Number" 
-                value={UserPhone2} 
-                onChange={(e) => setUserPhone2(e.target.value)} 
-            />
-            <input 
-                type="password" 
-                placeholder="Password" 
-                value={Passcode} 
-                onChange={(e) => setPasscode(e.target.value)} 
-            />
-            <button onClick={handlesignup}>Sign-up</button>
+            <div className="holder">
+                <input 
+                    type="text" 
+                    placeholder="Player 1 Username" 
+                    value={UserName1} 
+                    onChange={(e) => setUserName1(e.target.value)} 
+                />
+                <input 
+                    type="text" 
+                    placeholder="Player 1 Phone-Number" 
+                    value={UserPhone1} 
+                    onChange={(e) => setUserPhone1(e.target.value)} 
+                />
+                <input 
+                    type="text" 
+                    placeholder="Player 2 Username" 
+                    value={UserName2} 
+                    onChange={(e) => setUserName2(e.target.value)} 
+                />
+                <input 
+                    type="text" 
+                    placeholder="Player 2 Phone-Number" 
+                    value={UserPhone2} 
+                    onChange={(e) => setUserPhone2(e.target.value)} 
+                />
+                <input 
+                    type="password" 
+                    placeholder="Password" 
+                    value={Passcode} 
+                    onChange={(e) => setPasscode(e.target.value)} 
+                />
+            </div>
+            <div className="button">
+                <button onClick={handlesignup}>Sign-up</button>
+            </div>
+               
         </div>
     );
 }

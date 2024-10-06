@@ -30,12 +30,12 @@ function Group(props) {
         <div className="Group">
             <GroupRow
                 rank={"Rank"}
-                player1={"Player 1"}
-                player2={"Player 2"}
-                played={"Played"}
-                wins={"Wins"}
-                losses={"Losses"}
-                points={"Points"}
+                player1={"Player-1"}
+                player2={"Player-2"}
+                played={"PL"}
+                wins={"W"}
+                losses={"L"}
+                points={"Pts"}
             />
             {rows.length > 0 ? rows : "Loading..."}
             <Fixtures group_id={props.group_id} admin={'NO'} />

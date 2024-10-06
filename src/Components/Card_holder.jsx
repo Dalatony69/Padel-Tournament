@@ -2,21 +2,24 @@ import React, { useState, useCallback } from "react";
 import SignupCard from "./Signup_card";
 import LoginCard from "./Login_card";
 
-function Card_holder() {
-    const [isLogin, setIsLogin] = useState(true);
+function CardHolder() {
+    const [Switch, setSwitch] = useState('login');
 
-    const switchCards = useCallback(() => {
-        setIsLogin(prev => !prev);
+    const switchCards = useCallback((s) => {
+        setSwitch(s);
     }, []);
 
     return (
         <div className="card-holder">
-            {isLogin ? <LoginCard /> : <SignupCard />}
-            <button onClick={switchCards}>
-                {isLogin ? "Create Account" : "Already Have an Account"}
-            </button>
+            <div className="selectors">
+                <span onClick={() => switchCards('sign')} style={{borderBottom : Switch === 'login' ? 'none' : '2px solid white' }}>Sign-up</span>
+                <span onClick={() => switchCards('login')} style={{borderBottom : Switch !== 'login' ? 'none' : '2px solid white' }}>Log-in</span>
+            </div>
+            <div className="sub-holder">
+                {Switch === 'login' ? <LoginCard /> : <SignupCard />}
+            </div>
         </div>
     );
 }
 
-export default Card_holder;
+export default CardHolder;

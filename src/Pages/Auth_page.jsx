@@ -4,7 +4,9 @@ import CardHolder from "../Components/Card_holder";
 function Auth(){
     return(
         <div className="auth-page">
-            <CardHolder/>
+            <div className="holder">
+                <CardHolder/>
+            </div>
         </div>
     );
 }

@@ -5,7 +5,7 @@ function Lobby() {
 
     const GetData = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/GetData');
+            const response = await fetch('http://51.20.32.239:5000/GetData');
             const players = await response.json(); // Parse the response as JSON
 
             setData(players);
@@ -21,11 +21,28 @@ function Lobby() {
     return (
         <div className="lobby">
             <div className="holder">
-                {data.map((player, index) => (
-                    <div key={index}>
-                        {player[1] + " " + player[2]} 
+                <div className="data">
+                    {data.map((player, index) => (
+                        <div key={index}>
+                            <span>{"Team " + ++index}</span>
+                            <span> {player[1] + " & " + player[2]} </span>
+                        </div>
+                    ))}
+                </div>
+                <div className="emoji">
+                    <span className="title">
+                        The Tournament will start in 1/12/2024  9:00 PM
+                    </span>
+                    <div className="lucky">
+                        <div className="notes">
+                            <span>PLEASE READ THE RULES</span>
+                            <div>Book of Rules</div>
+                        </div>
+                        <div className="ball">
+                            <div></div>
+                        </div>
                     </div>
-                ))}
+                </div>
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ function Login_card() {
 
     const WhereTo = useCallback(async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/WhereTo');
+            const response = await fetch('http://51.20.32.239:5000/WhereTo');
             const data = await response.json(); // Assuming the backend returns JSON
             if (data.message === 'Lobby') {
                 navigate('/Lobby');
@@ -27,7 +27,7 @@ function Login_card() {
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/ValidateUser', {
+            const response = await fetch('http://51.20.32.239:5000/ValidateUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,20 +50,23 @@ function Login_card() {
 
     return (
         <div className="login-card">
-            <span>Login</span>
-            <input 
-                type="text" 
-                placeholder="Team-ID" 
-                value={Teamid} 
-                onChange={(e) => setTeamid(e.target.value)} 
-            />
-            <input 
-                type="password" 
-                placeholder="Password" 
-                value={Passcode} 
-                onChange={(e) => setPasscode(e.target.value)} 
-            />
-            <button onClick={handlelogin}>Login</button>
+            <div className="holder">
+                <input 
+                    type="text" 
+                    placeholder="Team-ID" 
+                    value={Teamid} 
+                    onChange={(e) => setTeamid(e.target.value)} 
+                />
+                <input 
+                    type="password" 
+                    placeholder="Password" 
+                    value={Passcode} 
+                    onChange={(e) => setPasscode(e.target.value)} 
+                />
+            </div>
+            <div className="button">
+                <button onClick={handlelogin}>Login</button>
+            </div>
         </div>
     );
 }
