@@ -1,0 +1,286 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root{
+    --primaryTheme-strongCyan: hsl(172, 67%, 45%);
+
+    /* Neutral */
+    --Verydarkcyan: hsl(183, 100%, 15%);
+    --Darkgrayishcyan: hsl(186, 14%, 43%);
+    --Grayishcyan: hsl(184, 14%, 56%);
+    --Lightgrayishcyan: hsl(185, 41%, 84%);
+    --Verylightgrayishcyan: hsl(189, 41%, 97%);
+    --White: hsl(178, 100%, 90%);
+
+    /* Font */
+    --family: monospace;
+    --inputFontSize: 24px;
+    --weight: 700;
+}
+
+#Auth-Page{
+    display: flex;
+    justify-content: center;
+}
+
+#Auth-Page-Container{
+    width: 80%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    box-shadow: black 0 0 30px;
+    margin: 5%;
+    border-radius: 20px 80px 80px 20px;
+    overflow: hidden;
+}
+
+#Greet{
+    width: 40%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--Verydarkcyan);
+    background: linear-gradient(30deg, var(--Verydarkcyan) -10%, var(--primaryTheme-strongCyan) 150%);
+    color: var(--Verylightgrayishcyan);
+}
+
+#line{
+    width: 90%;
+    height: 1px;
+    background-color: white;
+    margin: 3% auto;
+}
+
+.card-holder{
+    background-color: var(--Lightgrayishcyan);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.login-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+form{
+    width: 100%
+}
+
+.login-card h1{
+    color: var(--Darkgrayishcyan);
+}
+
+.login-card input, .login-card button{
+    width: 80%;
+}
+
+.login-card input::placeholder{
+    font-size: 110%;
+    text-indent: 8px;
+}
+
+.login-card button{
+    background: linear-gradient(10deg, var(--Verydarkcyan) 0%, var(--primaryTheme-strongCyan) 160%);
+    border: none;
+    color: var(--White);
+    border-radius: 10px;
+    position: relative;
+}
+
+.error-message{
+    color: brown;
+}
+/*
+.login-card button::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(10deg, var(--primaryTheme-strongCyan) 0%, var(--Verydarkcyan) 160%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: -1;
+    animation-name: ani;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    animation-delay: 0;
+}
+@keyframes ani{
+    0%{
+        opacity: 0;
+    }
+    25%{
+        opacity: 0.25;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    75%{
+        opacity: 0.75;
+    }
+    101%{
+        opacity: 0.8;
+    }
+} */
+
+#CA-AHAC-Btn{
+    width: 25%;
+    background: transparent;
+    border: none;
+    color: var(--Verydarkcyan);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+
+
+
+/* For Phones */
+
+@media (max-width: 481px) {
+
+    #Auth-Page-Container{
+        width: 90%;
+        display: flex;
+        flex-direction: column-reverse;
+        margin: 15% 5%;
+    }
+
+    #Auth-Page-Container{
+        border-radius: 100px 20px 115px 20px;
+    }
+
+    .card-holder{
+        width: 100%;
+        padding: 20% 0;
+    }
+
+    #Greet{
+        width: 100%;
+        padding: 10% 6% 10% 6%;
+    }
+
+    #Greet h1{
+        font-size: 220%;
+    }
+
+    #line{
+        margin: 6% auto;
+    }
+
+    .login-card input, .login-card button{
+        height: 6vh;
+        margin: 3% 0;
+    }
+
+    #CA-AHAC-Btn{
+        width: 45%;
+    }
+}
+
+/* For wide screens (laptops, tablets) */
+
+@media (min-width: 1101px) {
+
+    .card-holder{
+        width: 61%;
+        gap: 20px;
+        padding: 6% 0;
+    }
+
+    .card-holder .login-card input, .card-holder .login-card button{
+        height: 6vh;
+        margin: 2% 0;
+        font-size: 120%;
+    }
+
+    #Greet{
+        width: 40%;
+        padding: 3%;
+    }
+
+    #Greet p{
+        font-size: 118%;
+    }
+
+    #line{
+        height: 2px;
+    }
+
+    #Greet h1{
+        font-size: 250%;
+    }
+}
+
+
+/* For wide phones */
+
+@media (min-width: 482px) and (max-width: 1100px) {
+
+    #Auth-Page-Container{
+        width: 90%;
+        margin: 8% 0;
+    }
+
+    .card-holder{
+        width: 60%;
+    }
+
+    .login-card input, .login-card button{
+        height: 12vh;
+        margin: 3% 0;
+    }
+
+    #Greet{
+        width: 40%;
+        padding: 5% 3%;
+    }
+
+    #line{
+        margin: 8% auto;
+    }
+
+    #Greet h1{
+        font-size: 220%;
+    }
+}
+
+
+
+
+
+
+
+
+/* Transitions..... */
+
+/* Fade transition styles */
+.fade-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+.fade-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+}
+.fade-exit {
+    opacity: 1;
+    transform: scale(1);
+}
+.fade-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+}
+
+#CA-AHAC-Btn:active{
+    opacity: 0;
+    transition: all ease-in-out 0.3s;
+}

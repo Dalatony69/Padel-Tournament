@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root{
+    --primaryTheme-strongCyan: hsl(172, 67%, 45%);
+
+    /* Neutral */
+    --Verydarkcyan: hsl(183, 100%, 15%);
+    --Darkgrayishcyan: hsl(186, 14%, 43%);
+    --Grayishcyan: hsl(184, 14%, 56%);
+    --Lightgrayishcyan: hsl(185, 41%, 84%);
+    --Verylightgrayishcyan: hsl(189, 41%, 97%);
+    --White: hsl(0, 0%, 100%);
+
+    /* Font */
+    --family: monospace;
+    --inputFontSize: 24px;
+    --weight: 700;
+}
+
+#Header-Container{
+    background-color: var(--Darkgrayishcyan);
+    height: 15vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures it stays on top */
+}
+
+#Brand-Logo{
+    font-size: 210% !important;
+}
+
+#Team-Usernames{
+    color: var(--White);
+    font-size: 120%;
+}
+
+
+/* For Phones' responsiveness */
+
+@media(max-width: 481px) {
+    #Header-Container{
+        background-color: var(--Darkgrayishcyan);
+        height: 10vh;
+    }
+
+    #Brand-Logo{
+        font-size: 180% !important;
+        text-indent: 10px;
+    }
+
+    #Team-Usernames{
+        color: var(--TextColor);
+        font-size: 100%;
+    }
+}
+
+/* For wide phones */
+
+@media (min-width: 482px) and (max-width: 1000px) {
+    #Brand-Logo{
+        font-size: 200% !important;
+        text-indent: -50px;
+    }
+}
+
+/* For wide screens (laptops, tablets) */
+
+@media(min-width: 1101px){
+    #Brand-Logo{
+        text-indent: -40px;
+    }
+}

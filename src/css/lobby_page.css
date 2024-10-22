@@ -1,0 +1,235 @@
+.lobby {
+    width: 100%;
+    height: 100vh;
+    background-color: #5f8dff;
+    display: grid;
+    place-items: center;
+    padding: 0 3%;
+    animation: fadeIn 2s ease-in-out; /* Added a fade-in animation for the lobby */
+  }
+  
+  .lobby .holder {
+    display: flex;
+    width: 100%;
+    transition: transform 0.5s ease; /* Added smooth transition when resizing or layout changes */
+  }
+  
+  .lobby .holder .data {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1% 2%;
+    border-radius: 20px;
+    border: 5px solid #55aaff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow for better visibility and depth */
+  }
+  
+  .lobby .holder .data div {
+    display: flex;
+    justify-content: space-between;
+    /* padding: 1% 0; */
+  }
+  
+  .lobby .holder div {
+    color: #000000;
+  }
+  
+  .lobby .holder .data div span {
+    flex: 1;
+    
+    width: 100%;
+    margin: auto 3%;
+  }
+  
+  .lobby .holder .emoji {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  .lobby .holder .emoji .title {
+    font-size: 2.5rem;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffffff;
+    animation: pulse 1.5s infinite; /* Added pulse animation to the title */
+  }
+  
+  .lobby .holder .emoji .lucky {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .lobby .holder .emoji .lucky .notes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 5%;
+  }
+  
+  .lobby .holder .emoji .lucky .notes span {
+    color: white;
+    letter-spacing: 2px;
+  }
+  
+  .lobby .holder .emoji .lucky .notes button {
+    background-color: #55aaff;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 0 0 4px #ffffff;
+    animation: slideUp 1s ease-in-out; /* Added sliding animation for the notes box */
+    margin: 5% 0;
+  }
+  
+  .lobby .holder .emoji .lucky .ball {
+    display: grid;
+    place-items: center;
+    margin: 5% 0;
+  }
+  
+  .lobby .holder .emoji .ball div {
+    background-image: url(../ball.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 45%;
+    animation: spin 5s infinite linear;
+    width: 40%;
+    filter: drop-shadow(-3px -5px 10px #9fff6b); /* Added a glowing effect to the spinning ball */
+  }
+  
+  /* Keyframes for animations */
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes slideUp {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .lobby {
+      height: fit-content;
+      padding: 8% 5%;
+    }
+  
+    .lobby .holder {
+      flex-direction: column-reverse;
+      height: 100vh;
+    }
+  
+    .lobby .holder .data {
+      flex: 3;
+    }
+  
+    .lobby .holder .data div {
+      width: 100%;
+    }
+  
+    .lobby .holder .emoji .title {
+      font-size: 25px;
+    }
+  
+    .lobby .holder .emoji .lucky .notes {
+      flex: 2;
+    }
+  
+    .lobby .holder .emoji .lucky .notes span {
+      letter-spacing: 1px;
+    }
+  
+    .lobby .holder .emoji .ball {
+      flex: 1;
+    }
+  
+    .lobby .holder .emoji .ball div {
+      background-size: contain;
+      height: 80px;
+      width: 80px;
+    }
+
+    .header-text{
+        font-size: 100%;
+      }
+    .header-logo{
+        font-size: 170%;
+    }
+  }
+  
+  @media (max-height: 400px) {
+    .lobby .holder {
+      display: flex;
+      flex-direction: row-reverse;
+      height: 100%;
+    }
+  
+    .lobby .holder .data {
+      height: fit-content;
+      width: 50%;
+    }
+
+
+
+    .header-text{
+        font-size: 100%;
+      }
+    .header-logo{
+        font-size: 200%;
+    }
+  }
+
+  @media (min-width: 769px){
+    .lobby .holder .data{
+        width: 50%;
+        height: 80vh;
+    }
+  }
+  
+
+  /* Externals */
+
+  .header-text{
+    color: black;
+  }
+  .header-logo{
+    color: black;
+  }

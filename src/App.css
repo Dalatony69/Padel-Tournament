@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Irish Grover", system-ui;
+}
+:root{
+  --Purple:#40328F;
+  --Blue:#279EFF;
+  --Turqouise:#40F8FF;
+  --White:#D5FFD0;
+}
+.App{
+  width: 100%;
+}
+/* START AUTH PAGE */
+.auth-page{
+  background-color: var(--Purple);
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 3%;
+}
+.auth-page .holder{
+  width: 50%;
+  height: 100%;
+}
+/* - START CARD-HOLDER */
+.auth-page .card-holder{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.auth-page .card-holder .selectors{
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  color: white;
+}
+.auth-page .card-holder .selectors span{
+  cursor: pointer;
+  height: fit-content;
+}
+.auth-page .card-holder .sub-holder{
+  flex: 9;
+}
+/* - - START SIGN-UP CARD */
+.auth-page .card-holder .sub-holder .sign-up-card,.login-card{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.auth-page .card-holder .sub-holder .sign-up-card .holder{
+  flex: 8.5;
+  background-color: var(--Blue);
+  width: 100%;
+  border: 5px solid black;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0 3%;
+}
+.auth-page .card-holder .sub-holder .login-card .holder{
+  flex: 7;
+  background-color: var(--Blue);
+  width: 100%;
+  border: 5px solid black;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+  padding: 0 3%;
+}
+.auth-page .card-holder .sub-holder .sign-up-card .holder input{
+  width: 100%;
+  padding: 3%;
+  border-radius: 20px;
+  border: none;
+  background-color: var(--White);
+}
+.auth-page .card-holder .sub-holder .login-card .holder input{
+  width: 100%;
+  padding: 5%;
+  border-radius: 20px;
+  border: none;
+  background-color: var(--White);
+}
+.auth-page .card-holder .sub-holder .sign-up-card .button{
+  flex: 1.5;
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.auth-page .card-holder .sub-holder .login-card .button{
+  flex: 3;
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth-page .card-holder .sub-holder .sign-up-card .button button{
+  width: 45%;
+  height: 70%;
+  border-radius: 40px;
+  background-color: var(--White);
+  border: 3px solid black;
+}
+.auth-page .card-holder .sub-holder .login-card .button button{
+  width: 45%;
+  height: 30%;
+  border-radius: 40px;
+  background-color: var(--White);
+  border: 3px solid black;
+}
+/* - - END SIGN-UP CARD */
+/* - END CARDHOLER */
+/* END AUTH PAGE */
+
+/* START LOBBY PAGE */
+.lobby{
+  width: 100%;
+  height: 100vh;
+  background-color: var(--Purple);
+  display: grid;
+  place-items: center;
+  padding: 0 3%;
+}
+.lobby .holder{
+  display: flex;
+  width: 100%;
+  height: 90%;
+}
+.lobby .holder .data{
+  background-color: var(--White);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1% 5%;
+  border-radius: 20px;
+  border: 5px solid black;
+}
+.lobby .holder .data div{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  flex: 1;
+}
+.lobby .holder div{
+  color: black;
+  flex: 1;
+}
+.lobby .holder .data div span{
+  flex: 1;
+}
+.lobby .holder .emoji{
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+}
+.lobby .holder .emoji .title{
+  font-size: 3rem;
+  flex: 1;
+  text-align: center;
+  color: var(--White);
+}
+.lobby .holder .emoji .lucky{
+  flex: 2;
+  display: flex;
+  align-items: center;
+}
+.lobby .holder .emoji .lucky .notes{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.lobby .holder .emoji .lucky .notes span{
+  color: rgb(189, 189, 189);
+  letter-spacing: 2px;
+}
+.lobby .holder .emoji .lucky .notes div{
+  background-color:black;
+  color: white;
+  border: 2px solid white;
+  border-radius: 20px;
+  width: 50%;
+  margin-top: 0 auto;
+  font-family:Arial, Helvetica, sans-serif;
+  padding: 1%;
+  text-shadow: 0 0 5px white;
+  font-size: 15px;
+  margin-top: 2%;
+  text-align: center;
+}
+.lobby .holder .emoji .lucky .ball{
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.lobby .holder .emoji .ball div{
+  background-image: url(./padel-ball-adidas.png);
+  background-repeat: no-repeat;
+  height: 36%;
+  animation: spin 3s infinite linear ;
+  width:34%;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* END LOBBY PAGE */
+
+/* Start Home Page !!!!!!!!!!!!!!!!! */
+
+.Home-page{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--Purple);
+}
+.Group-sec{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 2%;
+  gap: 20px;
+}
+.Group{
+  border: 2px solid black;
+  width: 45%;
+  background-color: var(--White);
+}
+.Group-row{
+  display: flex;
+  justify-content: space-around;
+}
+.Group-row div{
+  border: 1px solid black;
+  flex: 1;
+  text-align: center;
+}
+.Group-row div.name{
+  flex: 2;
+}
+.show-data{
+  border: 2px solid red;
+}
+.show-data main{
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-around;
+}
+.show-data main .left-team,.right-team,.setting{
+  display: flex;
+}
+.knockout-sec{
+  border: 2px solid red;
+}
+.quarter-final .QF1,.QF2,.QF3,.QF4{
+  display: flex;
+}
+.Semi-final .LSF,.RSF{
+  display: flex;
+}
+.final .F{
+display: flex;
+}
+
+/* End Home Page !!!!!!!!!!!!!!!!!!! */
+
+@media(max-width: 768px) and (min-width: 400px){}
+
+@media(max-width:399px){
+/* START AUTH PAGE */
+.auth-page{
+  padding: 0 5%;
+}
+.auth-page .holder{
+  width: 100%;
+  height: 80%;
+}
+/* - START CARD-HOLDER */
+/* - - START SIGN-UP CARD */
+
+.auth-page .card-holder .sub-holder .login-card .holder{
+  flex: 4;
+}
+.auth-page .card-holder .sub-holder .sign-up-card .holder input{
+  padding: 5%;
+}
+.auth-page .card-holder .sub-holder .login-card .button{
+  flex: 4;
+}
+/* - - END SIGN-UP CARD */
+/* - END CARDHOLER */
+/* END AUTH PAGE */
+
+/* START LOBBY PAGE */
+.lobby{
+  height:unset;
+}
+.lobby .holder{
+  flex-direction: column-reverse;
+  height: 120vh;
+}
+.lobby .holder .data{
+  height: 100%;
+  flex: 3;
+}
+.lobby .holder .data div{
+  width: 100%;
+}
+.lobby .holder .emoji{
+  flex: 1;
+}
+.lobby .holder .emoji .title{
+  font-size: 25px;
+}
+.lobby .holder .emoji .lucky .notes{
+  flex: 2;
+}
+.lobby .holder .emoji .lucky .notes span{
+  letter-spacing: 0;
+}
+
+.lobby .holder .emoji .ball{
+  flex: 1;
+  /* background-color: blue; */
+}
+.lobby .holder .emoji .ball div{
+  background-size: contain;
+  height: 80px;
+  width:80px;
+}
+
+/* END LOBBY PAGE */
+
+/* START HOME PAGE */
+
+.Group-sec{
+  /* background-color: yellow; */
+  flex-direction: column;
+}
+.Group{
+  border: 2px solid black;
+  width: 100%;
+  background-color: var(--White);
+}
+/* END HOME PAGE */
+}

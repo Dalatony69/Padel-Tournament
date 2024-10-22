@@ -1,0 +1,524 @@
+/* General Styling */
+body {
+    background-color: #f0f8ff;
+    font-family: 'Arial', sans-serif;
+    color: #004080;
+}
+
+/* Group Section */
+.group-sec {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Group Container */
+.Group {
+    width: 45%;
+    background-color: #e6f2ff;
+    border: 2px solid #004080;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 3vh 0;
+    text-align: center;
+    box-shadow: #0000006e 4px 7px 10px;
+}
+
+/* Group Row Styling */
+.Group-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    margin: 2% 0;
+    background-color: #d1e6ff;
+    border-radius: 6px;
+}
+
+.Group-row .rank,
+.Group-row .played,
+.Group-row .wins,
+.Group-row .losses,
+.Group-row .points {
+    width: 10%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.Group-row .name {
+    width: 35%;
+    text-align: left;
+    padding-left: 5%;
+}
+
+/* Button Styling */
+.Fixtures div button {
+    background-color: #5f8dff;
+    border: none;
+    border-radius: 10px;
+    width: 60%;
+    color: #fff;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 300ms ease;
+}
+
+.Fixtures div button:hover{
+    transform: scale(1.1);
+    transition: transform 300ms ease;
+}
+
+.Fixtures div button:active{
+    transform: scale(1);
+}
+
+.Fixtures div button:active {
+    background-color: #5075d3;
+}
+
+/* Fixtures Section */
+.Fixtures {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.Fixtures main{
+    background-color: #d1e6ff;
+    border-radius: 10px;
+    margin: 2% 0;
+    padding: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Left and Right Teams */
+.left-team, .right-team {
+    width: 25%;
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #e6f2ff;
+    border-radius: 8px;
+}
+
+.left-team div, .right-team div {
+    padding: 5px;
+    font-weight: bold;
+    color: #004080;
+    text-wrap: wrap;
+}
+
+.score-team{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40%;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.score-team div{
+    font-size: 140%;
+}
+
+.setting {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.setting input {
+    width: 40px;
+    padding: 5px;
+    border: 1px solid #004080;
+    border-radius: 4px;
+    margin: 0 10px;
+}
+
+.setting button {
+    background-color: #004080;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.show-data main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #d1e6ff;
+    border-radius: 6px;
+}
+
+
+/* Dalatony */
+.knockout-sec{
+    border: 2px solid black;
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: repeat(8,1fr);
+    background-size: cover;
+}
+.knockout-sec .quarter-final{
+    grid-row-start: 8;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 2%;
+}
+.knockout-sec .quarter-final .QF{
+    border-radius: 20px;
+    background-color: #d1e6ff;
+    box-shadow: 0 0 10px black;
+    display: flex;
+    align-items: center;
+}
+.knockout-sec .quarter-final .QF main{
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.knockout-sec .line-holder1-1{
+    grid-row-start: 7;
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    color: transparent;
+}
+.knockout-sec .line-holder1-1 .left{
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+}
+.knockout-sec .line-holder1-1 .right{
+    border-right: 2px solid black;
+    border-top: 2px solid black ;
+}
+.knockout-sec .line-holder1-2{
+    grid-row-start: 6;
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    color: transparent;
+}
+.knockout-sec .line-holder1-2 .left{
+    border-left: 2px solid black;
+}
+.knockout-sec .semi-final{
+    grid-row-start: 5;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+}
+.knockout-sec .semi-final .L{
+    grid-column-start: 2;
+    grid-column-end:3 ;
+}
+.knockout-sec .semi-final .R{
+    grid-column-start:5;
+    grid-column-end:6;
+}
+.knockout-sec .semi-final .SF{
+    border-radius: 20px;
+    background-color: #d1e6ff;
+    box-shadow: 0 0 10px black;
+    display: flex;
+    align-items: center;
+}
+.knockout-sec .semi-final .SF main{
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.knockout-sec .line-holder2-1{
+    grid-row-start: 4;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    color: transparent;
+}
+.knockout-sec .line-holder2-1 .left{
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+}
+.knockout-sec .line-holder2-1 .right{
+    border-right: 2px solid black;
+    border-top: 2px solid black ;
+}
+.knockout-sec .line-holder2-2{
+    grid-row-start: 3;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    color: transparent;
+}
+.knockout-sec .line-holder2-2 .left{
+    border-left: 2px solid black;
+}
+.knockout-sec .final{
+    grid-row-start: 2;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+}
+.knockout-sec .final .F{
+    border-radius: 20px;
+    background-color: #d1e6ff;
+    box-shadow: 0 0 10px black;
+    grid-column-start:3;
+    grid-column-end:5;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+.knockout-sec .final .F main{
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+
+/* End Dalatony */
+
+@media (max-width: 768px){
+
+    .Group{
+        width: 95%;
+        font-size: 85%;
+    }
+
+    .Group-row .rank,
+    .Group-row .played,
+    .Group-row .wins,
+    .Group-row .losses,
+    .Group-row .points {
+        width: 10%;
+    }
+
+    .Group-row .name {
+        width: 25%;
+    }
+
+    .Group-row {
+        justify-content: space-evenly;
+    }
+    .knockout-sec{
+        border: 2px solid black;
+        height: 50vh;
+        width: 300%;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: repeat(8,1fr);
+        grid-template-rows:0;
+    }
+    .knockout-sec .quarter-final{
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 0;
+        display: grid;
+        grid-template-rows: repeat(4,1fr);
+        grid-template-columns: 0;
+        gap: 2%;
+        background-color: #5075d3;
+    }
+    .knockout-sec .quarter-final .QF{
+        border: 2px solid black;
+        display: flex;
+        align-items: center;
+        font-size: 10px;
+    }
+    .knockout-sec .quarter-final .QF main{
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .knockout-sec .line-holder1-1{
+        grid-row-end: 7;
+        display: grid;
+        grid-template-rows: repeat(8,1fr);
+        color: transparent;
+        display: none;
+    }
+    .knockout-sec .line-holder1-1 .left{
+        border-left: 2px solid black;
+        border-top: 2px solid black;
+    }
+    .knockout-sec .line-holder1-1 .right{
+        border-right: 2px solid black;
+        border-top: 2px solid black ;
+    }
+    .knockout-sec .line-holder1-2{
+        grid-row-end: 6;
+        display: grid;
+        grid-template-rows: repeat(8,1fr);
+        color: transparent;
+        display: none;
+    }
+    .knockout-sec .line-holder1-2 .left{
+        border-left: 2px solid black;
+    }
+    .knockout-sec .semi-final{
+        grid-row-end: 5;
+        display: grid;
+        grid-template-rows: repeat(6,1fr);
+        display: none;
+    }
+    .knockout-sec .semi-final .L{
+        grid-column-start: 2;
+        grid-column-end:3 ;
+    }
+    .knockout-sec .semi-final .R{
+        grid-column-start:5;
+        grid-column-end:6;
+    }
+    .knockout-sec .semi-final .SF{
+        border: 2px solid black;
+        display: flex;
+        align-items: center;
+    }
+    .knockout-sec .semi-final .SF main{
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .knockout-sec .line-holder2-1{
+        grid-row-end: 4;
+        display: grid;
+        grid-template-rows: repeat(4,1fr);
+        color: transparent;
+        display: none;
+    }
+    .knockout-sec .line-holder2-1 .left{
+        border-left: 2px solid black;
+        border-top: 2px solid black;
+    }
+    .knockout-sec .line-holder2-1 .right{
+        border-right: 2px solid black;
+        border-top: 2px solid black ;
+    }
+    .knockout-sec .line-holder2-2{
+        grid-row-end: 3;
+        display: grid;
+        grid-template-rows: repeat(4,1fr);
+        color: transparent;
+        display: none;
+    }
+    .knockout-sec .line-holder2-2 .left{
+        border-left: 2px solid black;
+    }
+    .knockout-sec .final{
+        grid-row-end: 2;
+        display: grid;
+        grid-template-rows: repeat(6,1fr);
+        display: none;
+    }
+    .knockout-sec .final .F{
+        border: 2px solid black;
+        grid-column-start:3;
+        grid-column-end:5;
+    }
+    .knockout-sec .final .F{
+        border: 2px solid black;
+        display: flex;
+        align-items: center;
+    }
+    .knockout-sec .final .F main{
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+/* Modal */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    max-width: 600px;
+    min-height: 200px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .modal-content h1{
+    padding: 5% 0;
+    margin-top: 30px;
+  }
+
+  .modal-overlay .modal-content .close-btn {
+    position: absolute;
+    right: 2%;
+    z-index: 2;
+    width: 50px;
+    height: 50px;
+    /* background-color: transparent !important; */
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .close-btn:hover {
+    color: #ff0000;
+  }
+
+  .modal-body {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 90%;
+      padding: 10px;
+    }
+
+    .modal-body {
+        width: 90%;
+        margin: 10% 0;
+      }
+  }
+
+/* End Modal */
