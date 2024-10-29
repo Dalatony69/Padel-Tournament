@@ -13,7 +13,7 @@ function Final(props) {
 
     const HandleFinal = async () => {
         try {
-            const response = await fetch('http://51.20.32.239:5000/ShowFinalQualifiers');
+            const response = await fetch('http://13.61.73.123:5000/ShowFinalQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -42,7 +42,7 @@ function Final(props) {
         };
 
         try {
-            const response = await fetch('http://51.20.32.239:5000/Winner', {
+            const response = await fetch('http://13.61.73.123:5000/Winner', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ function Final(props) {
         // Define the async function inside useEffect
         const checkfinal = async () => {
             try {
-                const response = await fetch('http://51.20.32.239:5000/CheckSettingFinal');
+                const response = await fetch('http://13.61.73.123:5000/CheckSettingFinal');
                 const data = await response.json(); // Assuming the backend returns JSON
 
                 if (data['message'] === 'Yes') {

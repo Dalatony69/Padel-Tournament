@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 db_config = {
-    'host': '51.20.32.239',
+    'host': '13.61.73.123',
     'database': 'sparx_schema',
     'user': 'Dalatony_MYSQL',
     'password': 'Elsharkawy(2005)'
@@ -1142,6 +1142,31 @@ def Winnner():
         print(f"Database connection error: {e}")
         return jsonify({'error': 'Database connection failed'}), 500
 
+@app.route('/Terminate',methods =['Get'])
+def terminate():
+     try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        try:
+            sql = """TRUNCATE TABLE user;
+                    TRUNCATE TABLE team;
+                    TRUNCATE TABLE groop;
+                    TRUNCATE TABLE game;
+                    TRUNCATE TABLE setting;
+                    """
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            if result:
+                return jsonify({'message': 'All Deleted Successfully'}), 200
+            else:
+                return jsonify({'message': 'Problem wiht Deletion'}), 200
+        except Exception as e:
+            print(f"Failure: {e}")
+            return jsonify({'error': 'An error occurred while fetching '}), 500
+     except Exception as e:
+            print(f"Failure: {e}")
+            return jsonify({'error': 'An error occurred while fetching'}), 500
+        
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0' , port=5000)

@@ -176,107 +176,121 @@ body {
     border: 2px solid black;
     height: 100vh;
     width: 100%;
+    background-color: #5075d3;
+    padding: 1%;
+    overflow:scroll ;
+}
+.knockout-sec .holderrr{
+    background-color: green;
+    width: 100vh;
+    height: 100%;
     display: grid;
     grid-template-rows: repeat(8,1fr);
-    background-size: cover;
+    transform: rotate(90deg);
 }
-.knockout-sec .quarter-final{
+.knockout-sec .holderrr .quarter-final{
     grid-row-start: 8;
     display: grid;
     grid-template-columns: repeat(4,1fr);
     gap: 2%;
 }
-.knockout-sec .quarter-final .QF{
+.knockout-sec .holderrr .quarter-final .QF{
     border-radius: 20px;
     background-color: #d1e6ff;
     box-shadow: 0 0 10px black;
     display: flex;
     align-items: center;
 }
-.knockout-sec .quarter-final .QF main{
+.knockout-sec .holderrr .quarter-final .QF main{
     flex: 1;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.knockout-sec .line-holder1-1{
+.knockout-sec .holderrr .line-holder1-1{
     grid-row-start: 7;
     display: grid;
     grid-template-columns: repeat(8,1fr);
     color: transparent;
 }
-.knockout-sec .line-holder1-1 .left{
+/* .knockout-sec .holderrr .line-holder1-1 div{
+    border: 2px solid black;
+} */
+.knockout-sec .holderrr .line-holder1-1 .left{
     border-left: 2px solid black;
     border-top: 2px solid black;
 }
-.knockout-sec .line-holder1-1 .right{
+.knockout-sec .holderrr .line-holder1-1 .right{
     border-right: 2px solid black;
     border-top: 2px solid black ;
 }
-.knockout-sec .line-holder1-2{
+.knockout-sec .holderrr .line-holder1-2{
     grid-row-start: 6;
     display: grid;
     grid-template-columns: repeat(8,1fr);
     color: transparent;
 }
-.knockout-sec .line-holder1-2 .left{
+/* .knockout-sec .holderrr .line-holder1-2 div{
+    border: 2px solid black;
+} */
+.knockout-sec .holderrr .line-holder1-2 .left{
     border-left: 2px solid black;
 }
-.knockout-sec .semi-final{
+.knockout-sec .holderrr .semi-final{
     grid-row-start: 5;
     display: grid;
     grid-template-columns: repeat(6,1fr);
 }
-.knockout-sec .semi-final .L{
+.knockout-sec .holderrr .semi-final .L{
     grid-column-start: 2;
     grid-column-end:3 ;
 }
-.knockout-sec .semi-final .R{
+.knockout-sec .holderrr .semi-final .R{
     grid-column-start:5;
     grid-column-end:6;
 }
-.knockout-sec .semi-final .SF{
+.knockout-sec .holderrr .semi-final .SF{
     border-radius: 20px;
     background-color: #d1e6ff;
     box-shadow: 0 0 10px black;
     display: flex;
     align-items: center;
 }
-.knockout-sec .semi-final .SF main{
+.knockout-sec .holderrr .semi-final .SF main{
     flex: 1;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.knockout-sec .line-holder2-1{
+.knockout-sec .holderrr .line-holder2-1{
     grid-row-start: 4;
     display: grid;
     grid-template-columns: repeat(4,1fr);
     color: transparent;
 }
-.knockout-sec .line-holder2-1 .left{
+.knockout-sec .holderrr .line-holder2-1 .left{
     border-left: 2px solid black;
     border-top: 2px solid black;
 }
-.knockout-sec .line-holder2-1 .right{
+.knockout-sec .holderrr .line-holder2-1 .right{
     border-right: 2px solid black;
     border-top: 2px solid black ;
 }
-.knockout-sec .line-holder2-2{
+.knockout-sec .holderrr .line-holder2-2{
     grid-row-start: 3;
     display: grid;
     grid-template-columns: repeat(4,1fr);
     color: transparent;
 }
-.knockout-sec .line-holder2-2 .left{
+.knockout-sec .holderrr .line-holder2-2 .left{
     border-left: 2px solid black;
 }
-.knockout-sec .final{
+.knockout-sec .holderrr .final{
     grid-row-start: 2;
     display: grid;
     grid-template-columns: repeat(6,1fr);
 }
-.knockout-sec .final .F{
+.knockout-sec .holderrr .final .F{
     border-radius: 20px;
     background-color: #d1e6ff;
     box-shadow: 0 0 10px black;
@@ -284,16 +298,13 @@ body {
     grid-column-end:5;
     display: flex;
     align-items: center;
-    font-size: 15px;
+    font-size: 20px;
 }
-.knockout-sec .final .F main{
+.knockout-sec .holderrr .final .F main{
     flex: 1;
     display: flex;
     justify-content: space-around;
 }
-
-
-
 
 /* End Dalatony */
 
@@ -319,133 +330,7 @@ body {
     .Group-row {
         justify-content: space-evenly;
     }
-    .knockout-sec{
-        border: 2px solid black;
-        height: 50vh;
-        width: 300%;
-        overflow: hidden;
-        display: grid;
-        grid-template-columns: repeat(8,1fr);
-        grid-template-rows:0;
-    }
-    .knockout-sec .quarter-final{
-        grid-column-start: 1;
-        grid-column-end: 2;
-        grid-row-start: 0;
-        display: grid;
-        grid-template-rows: repeat(4,1fr);
-        grid-template-columns: 0;
-        gap: 2%;
-        background-color: #5075d3;
-    }
-    .knockout-sec .quarter-final .QF{
-        border: 2px solid black;
-        display: flex;
-        align-items: center;
-        font-size: 10px;
-    }
-    .knockout-sec .quarter-final .QF main{
-        flex: 1;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-    .knockout-sec .line-holder1-1{
-        grid-row-end: 7;
-        display: grid;
-        grid-template-rows: repeat(8,1fr);
-        color: transparent;
-        display: none;
-    }
-    .knockout-sec .line-holder1-1 .left{
-        border-left: 2px solid black;
-        border-top: 2px solid black;
-    }
-    .knockout-sec .line-holder1-1 .right{
-        border-right: 2px solid black;
-        border-top: 2px solid black ;
-    }
-    .knockout-sec .line-holder1-2{
-        grid-row-end: 6;
-        display: grid;
-        grid-template-rows: repeat(8,1fr);
-        color: transparent;
-        display: none;
-    }
-    .knockout-sec .line-holder1-2 .left{
-        border-left: 2px solid black;
-    }
-    .knockout-sec .semi-final{
-        grid-row-end: 5;
-        display: grid;
-        grid-template-rows: repeat(6,1fr);
-        display: none;
-    }
-    .knockout-sec .semi-final .L{
-        grid-column-start: 2;
-        grid-column-end:3 ;
-    }
-    .knockout-sec .semi-final .R{
-        grid-column-start:5;
-        grid-column-end:6;
-    }
-    .knockout-sec .semi-final .SF{
-        border: 2px solid black;
-        display: flex;
-        align-items: center;
-    }
-    .knockout-sec .semi-final .SF main{
-        flex: 1;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-    .knockout-sec .line-holder2-1{
-        grid-row-end: 4;
-        display: grid;
-        grid-template-rows: repeat(4,1fr);
-        color: transparent;
-        display: none;
-    }
-    .knockout-sec .line-holder2-1 .left{
-        border-left: 2px solid black;
-        border-top: 2px solid black;
-    }
-    .knockout-sec .line-holder2-1 .right{
-        border-right: 2px solid black;
-        border-top: 2px solid black ;
-    }
-    .knockout-sec .line-holder2-2{
-        grid-row-end: 3;
-        display: grid;
-        grid-template-rows: repeat(4,1fr);
-        color: transparent;
-        display: none;
-    }
-    .knockout-sec .line-holder2-2 .left{
-        border-left: 2px solid black;
-    }
-    .knockout-sec .final{
-        grid-row-end: 2;
-        display: grid;
-        grid-template-rows: repeat(6,1fr);
-        display: none;
-    }
-    .knockout-sec .final .F{
-        border: 2px solid black;
-        grid-column-start:3;
-        grid-column-end:5;
-    }
-    .knockout-sec .final .F{
-        border: 2px solid black;
-        display: flex;
-        align-items: center;
-    }
-    .knockout-sec .final .F main{
-        flex: 1;
-        display: flex;
-        justify-content: space-around;
-    }
+
 }
 
 /* Modal */

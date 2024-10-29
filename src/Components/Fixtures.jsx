@@ -20,7 +20,7 @@ function Fixtures(props) {
     alert(Team1score + Team2score + Gameid);
 
     try {
-      const response = await fetch("http://51.20.32.239:5000/SetGameScore", {
+      const response = await fetch("http://13.61.73.123:5000/SetGameScore", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ function Fixtures(props) {
   };
 
   const CreateFixtures = useCallback(() => {
-    fetch("http://51.20.32.239:5000/CreateFixtures")
+    fetch("http://13.61.73.123:5000/CreateFixtures")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -55,7 +55,7 @@ function Fixtures(props) {
   }, []);
 
   const GetFixtures = useCallback(() => {
-    fetch("http://51.20.32.239:5000/GetFixtures")
+    fetch("http://13.61.73.123:5000/GetFixtures")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

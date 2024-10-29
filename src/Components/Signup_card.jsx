@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from 'react-router-dom';
+import emailjs from '@emailjs/browser'
 
 function Signup_card() {
     const [UserName1, setUserName1] = useState('');
@@ -11,7 +12,7 @@ function Signup_card() {
 
     const WhereTo = useCallback(async () => {
         try {
-            const response = await fetch('http://51.20.32.239:5000/WhereTo');
+            const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json(); // Assuming the backend returns JSON
             if (data.message !== 'Lobby') {
                 navigate('/Lobby');
@@ -33,7 +34,7 @@ function Signup_card() {
         };
 
         try {
-            const response = await fetch('http://51.20.32.239:5000/HandleSignUp', {
+            const response = await fetch('http://13.61.73.123:5000/HandleSignUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -53,6 +54,21 @@ function Signup_card() {
         }
     }, [UserName1, UserName2, UserPhone1, UserPhone2, Passcode, WhereTo]);
 
+    const test = () => {
+        const Player1Data = `${UserName1} - ${UserPhone1}`;
+        const Player2Data = `${UserName2} - ${UserPhone2}`;
+
+        emailjs.send('service_rlvpprj', 'template_ihd0agq', {
+            Player1Data,
+            Player2Data,
+        }, '-npZe43yTWeFS0AAO')
+        .then((result) => {
+            console.log('Email sent successfully:', result.text);
+        }, (error) => {
+            console.error('Error sending email:', error);
+        });
+    };
+    
     return (
         <div className="sign-up-card">
             <div className="holder">
@@ -89,6 +105,7 @@ function Signup_card() {
             </div>
             <div className="button">
                 <button onClick={handlesignup}>Sign-up</button>
+                <button onClick={test}>test</button>
             </div>
                
         </div>

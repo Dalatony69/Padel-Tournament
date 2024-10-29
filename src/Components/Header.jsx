@@ -12,7 +12,7 @@ function Header(){
 
     const GetUserName = async() => {
         try{
-             const response = await fetch('http://51.20.32.239:5000/WhoCurrent');
+             const response = await fetch('http://13.61.73.123:5000/WhoCurrent');
             if (!response.ok) {
                alert('Network response was not ok');
                 }

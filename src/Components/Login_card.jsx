@@ -8,7 +8,7 @@ function Login_card() {
 
     const WhereTo = useCallback(async () => {
         try {
-            const response = await fetch('http://51.20.32.239:5000/WhereTo');
+            const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json();
             if (data.message === 'Lobby') {
                 navigate('/Lobby');
@@ -27,7 +27,7 @@ function Login_card() {
         };
 
         try {
-            const response = await fetch('http://51.20.32.239:5000/ValidateUser', {
+            const response = await fetch('http://13.61.73.123:5000/ValidateUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -7,7 +7,7 @@ function Lobby() {
 
     const GetData = async () => {
         try {
-            const response = await fetch('http://51.20.32.239:5000/GetData');
+            const response = await fetch('http://13.61.73.123:5000/GetData');
             const players = await response.json(); // Parse the response as JSON
 
             setData(players);

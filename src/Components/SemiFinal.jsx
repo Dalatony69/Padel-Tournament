@@ -19,7 +19,7 @@ function SemiFinal(props) {
 
     const HandleSemiFinal = async () => {
         try {
-            const response = await fetch('http://51.20.32.239:5000/ShowSemiQualifiers');
+            const response = await fetch('http://13.61.73.123:5000/ShowSemiQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -54,7 +54,7 @@ function SemiFinal(props) {
         };
 
         try {
-            const response = await fetch('http://51.20.32.239:5000/QualifyFinal', {
+            const response = await fetch('http://13.61.73.123:5000/QualifyFinal', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ function SemiFinal(props) {
         // Define the async function inside useEffect
         const checksemi = async () => {
             try {
-                const response = await fetch('http://51.20.32.239:5000/CheckSettingSemi');
+                const response = await fetch('http://13.61.73.123:5000/CheckSettingSemi');
                 const data = await response.json(); // Assuming the backend returns JSON
 
                 if (data['message'] === 'Yes') {

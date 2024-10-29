@@ -32,7 +32,7 @@ function Group_sec() {
     useEffect(() => {
         const GetData = async () => {
             try {
-                const response = await fetch('http://51.20.32.239:5000/GetData');
+                const response = await fetch('http://13.61.73.123:5000/GetData');
                 if (!response.ok) throw new Error('Network response was not ok');
 
                 const jsonData = await response.json();
