@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback} from "react";
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser'
 
@@ -10,12 +10,13 @@ function Signup_card() {
     const [Passcode, setPasscode] = useState('');
     const navigate = useNavigate();
 
-    const WhereTo = useCallback(async () => {
+    const WhereTo = useCallback(async (Teamid) => {
+        alert(Teamid);
         try {
             const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json(); // Assuming the backend returns JSON
             if (data.message !== 'Lobby') {
-                navigate('/Lobby');
+                navigate('/Lobby',{ state: { Teamid } });
             } else {
                 navigate('/Home');
             }
@@ -47,8 +48,8 @@ function Signup_card() {
             }
 
             const data = await response.json(); // Use response.json() if the backend returns JSON
-            console.log('Sign-up successful:', data);
-            WhereTo();
+            const Teamid = data['team_id'];
+            WhereTo(Teamid);
         } catch (error) {
             console.error('Error handling sign-up:', error);
         }

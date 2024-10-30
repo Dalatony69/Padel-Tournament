@@ -78,8 +78,8 @@ def handle_signup():
      if not data:
         return jsonify({'error': 'No input data provided'}), 400
      print('HandleSign Up CHECK')
-     create_user(data)
-     return jsonify({'message': 'Handle Signup is Success'}), 200
+     team_id = create_user(data)
+     return jsonify({'team_id': team_id}), 200
 
 def create_user(data):
 
@@ -107,8 +107,8 @@ def create_user(data):
         connection.close()
         
         print('Creatingusers CHECK')
-        create_team(id_1,id_2,data['Passcode'])
-        return jsonify({'message': 'Users created successfully'}), 201
+        team_id = create_team(id_1,id_2,data['Passcode'])
+        return team_id
     except Error as e:
         print(f"Error: {e}")
         return jsonify({'error': 'Failed to create users'}), 500
@@ -163,8 +163,8 @@ def create_team(id_1,id_2,passcode):
         id = count_teams() + 1 
         group_id = check_group('A')
         rank = 1
-        sql = "INSERT INTO team (team_id, player1_id, player2_id,group_id,team_current,team_played,team_wins,team_losses,team_gd,team_point,team_rank,team_passcode,team_stage) VALUES (%s, %s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        values = (id,id_1,id_2, group_id ,'YES',0,0,0,0,0,rank,passcode,'Group-Stage')
+        sql = "INSERT INTO team (team_id, player1_id, player2_id,group_id,team_current,team_played,team_wins,team_losses,team_gd,team_point,team_rank,team_passcode,team_stage,team_request) VALUES (%s,%s, %s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        values = (id,id_1,id_2, group_id ,'YES',0,0,0,0,0,rank,passcode,'Group-Stage','Waiting')
         
         cursor.execute(sql, values)
         connection.commit()
@@ -172,7 +172,7 @@ def create_team(id_1,id_2,passcode):
         connection.close()
         
         print('Creatingteam CHECK')
-        return jsonify({'message': 'Team created successfully'}), 201
+        return id
     except Error as e:
         print(f"Error: {e}")
         return jsonify({'error': 'Failed to create Team'}), 500
@@ -289,6 +289,56 @@ def get_data():
         print(f"Error: {e}")
         return jsonify({'error': 'problem with getting players data'}), 500
 
+@app.route('/LobbyData', methods = ['GET'])
+def lobby_data():
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        sql = "SELECT * FROM team WHERE team_request = %s"
+        cursor.execute(sql,('Accepted',))
+        data = cursor.fetchall()
+
+        modified_data = []
+        for row in data:
+            row_list = list(row)
+            username1 = search_player(row_list[1])
+            row_list[1] = username1 if username1 else row_list[1]
+            username2 = search_player(row_list[2])
+            row_list[2] = username2 if username2 else row_list[2]
+            modified_data.append(row_list)
+        cursor.close()
+        connection.close()
+
+        return jsonify(modified_data), 200
+    except Error as e:
+        print(f"Error: {e}")
+        return jsonify({'error': 'problem with getting players data'}), 500
+    
+@app.route('/WaitingList', methods = ['GET'])
+def waiting_list():
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        sql = "SELECT * FROM team WHERE team_request = %s"
+        cursor.execute(sql,('Waiting',))
+        data = cursor.fetchall()
+
+        modified_data = []
+        for row in data:
+            row_list = list(row)
+            username1 = search_player(row_list[1])
+            row_list[1] = username1 if username1 else row_list[1]
+            username2 = search_player(row_list[2])
+            row_list[2] = username2 if username2 else row_list[2]
+            modified_data.append(row_list)
+        cursor.close()
+        connection.close()
+
+        return jsonify(modified_data), 200
+    except Error as e:
+        print(f"Error: {e}")
+        return jsonify({'error': 'problem with getting players data'}), 500
+    
 def check_group(group_id):
     try:
         connection = get_db_connection()
