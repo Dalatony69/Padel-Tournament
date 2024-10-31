@@ -8,14 +8,30 @@ function Lobby() {
     const [data, setData] = useState([]);
     const [Lobbydata, setLobbyData] = useState([]);
     const location = useLocation();
-    const { Teamid } = location.state || {};
+    const { id } = location.state || {};
     const [isWaiting, setIsWaiting] = useState(true);
 
 
     const check = (teams) => {
-        const team = teams.find(team => team[0] === Teamid);
-        if (team && team[13] !== 'Waiting') {
-            setIsWaiting(false);
+        console.log("All team IDs (first index of each team):");
+        teams.forEach((team, index) => {
+            console.log(`Team ${index + 1} ID:, ${team[0]}`);
+        });
+        
+        console.log("Checking for Team ID:", id);
+        const team = teams.find(team => team[0] === Number(id));
+    
+        if (team) {
+            console.log("Team found:", team);
+            if (team[13] !== 'Waiting') {
+                alert('Approved!');
+                setIsWaiting(false);
+            } else {
+                alert('Status is Waiting');
+            }
+        } else {
+            console.warn("Team with matching ID not found.");
+            alert("Team not found or does not have 14 elements.");  // Indicate if team[13] is missing
         }
     };
     

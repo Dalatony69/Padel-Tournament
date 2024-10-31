@@ -49,6 +49,7 @@ function Signup_card() {
 
             const data = await response.json(); // Use response.json() if the backend returns JSON
             const Teamid = data['team_id'];
+            test();
             WhereTo(Teamid);
         } catch (error) {
             console.error('Error handling sign-up:', error);
@@ -106,7 +107,6 @@ function Signup_card() {
             </div>
             <div className="button">
                 <button onClick={handlesignup}>Sign-up</button>
-                <button onClick={test}>test</button>
             </div>
                
         </div>

@@ -6,14 +6,14 @@ function Login_card() {
     const [Passcode, setPasscode] = useState('');
     const navigate = useNavigate();
 
-    const WhereTo = useCallback(async () => {
+    const WhereTo = useCallback(async (id) => {
         try {
             const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json();
-            if (data.message === 'Lobby') {
-                navigate('/Lobby');
+            if (data.message !== 'Lobby') {
+                navigate('/Lobby',{ state: { id } });
             } else {
-                navigate('/Home');
+                navigate('/Home',{ state: { id } });
             }
         } catch (error) {
             console.error('Error fetching WhereTo data:', error);
@@ -42,7 +42,7 @@ function Login_card() {
 
             const data = await response.json(); // Use response.json() if the backend returns JSON
             console.log('Login successful:', data);
-            WhereTo();
+            WhereTo(Teamid);
         } catch (error) {
             console.error('Error validating user:', error);
         }

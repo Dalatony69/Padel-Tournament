@@ -8,6 +8,7 @@ import Final from "../Components/Final";
 function Admin_Page(){
 
     const [WaitingListdata, setWaitingListdata] = useState([]);
+    // const [Acceptedid,setAcceptedid] = useState('');
 
     const Restart = async() =>{
         try{
@@ -31,9 +32,33 @@ function Admin_Page(){
         }
     };
 
+    const Accept = async(value) =>{
+        
+        try {
+            const teamid = {
+                Teamid : value
+            }
+            const response = await fetch('http://13.61.73.123:5000/AcceptTeam', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(teamid)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+        } catch (error) {
+            console.error('Error handling sign-up:', error);
+        }
+    }
+
     useEffect(() => {
         GetData();
     }, []);
+
 
 
     return(
@@ -60,6 +85,7 @@ function Admin_Page(){
                                     }}>
                                         <span>{"Team " + ++index}</span>
                                         <span> {player[1] + " & " + player[2]} </span>
+                                        <button onClick={()=>{Accept(player[0])}}>accept</button>
                                     </div>
                                 ))}
                             </div>

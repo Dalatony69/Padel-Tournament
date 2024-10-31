@@ -214,7 +214,31 @@ def validate_user():
     except Error as e:
         print(f"Error: {e}")
         return jsonify({'error': 'Failed to validate user'}), 500
+
+@app.route('/AcceptTeam', methods=['POST'])
+def accept_team():
     
+    try:
+        data = request.json
+
+        if not data:
+             return jsonify({'error': 'No input data provided'}), 400
+
+        team_id = data['Teamid']
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        sql = "UPDATE team SET team_request = %s WHERE team_id = %s"
+        values = ('Accepted',team_id)
+        cursor.execute(sql, values)
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return jsonify({'message': 'Team request accepted successfully'}), 200
+
+    except Error as e:
+        print(f"Error: {e}")
+        return jsonify({'error': 'Could not find user with current on'}), 500
+
 @app.route('/WhoCurrent', methods=['GET'])
 def who_current():
     try:
