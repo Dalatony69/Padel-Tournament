@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback ,useMemo} from "react";
 import Modal from '../Components/Modal';  // Import the Modal component
+import { useLocation } from 'react-router-dom';
 
 function Fixtures(props) {
   const [game, setgame] = useState([]);
@@ -7,6 +8,9 @@ function Fixtures(props) {
   const [Visible, setVisible] = useState(false);
   const [Team1score, setTeam1score] = useState();
   const [Team2score, setTeam2score] = useState();
+  const location = useLocation();
+  const isAdminRoute = useMemo(() => location.pathname === "/Admin", [location.pathname]);
+
   
   const loser = "#B81D1344";
   const winner = "#00845044";
@@ -40,19 +44,6 @@ function Fixtures(props) {
       console.error("There was an error!", error);
     }
   };
-
-  const CreateFixtures = useCallback(() => {
-    fetch("http://13.61.73.123:5000/CreateFixtures")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .catch((err) => {
-        alert("ERRRRRRRRRRRRRR" + err);
-      });
-  }, []);
 
   const GetFixtures = useCallback(() => {
     fetch("http://13.61.73.123:5000/GetFixtures")
@@ -97,13 +88,7 @@ function Fixtures(props) {
   return (
     <div className="Fixtures">
       <div>
-        <button
-          onClick={CreateFixtures}
-          style={{ display: props.admin === "YES" ? "inline" : "none" }}
-        >
-          Gamesss
-        </button>
-
+  
         <button onClick={() => setVisible(!Visible)}>
           {Visible ? "Hide" : "Show"} Results
         </button>
@@ -136,9 +121,9 @@ function Fixtures(props) {
                   Visible !== fixture.game_id &&
                   fixture.team1_score === 0 &&
                   fixture.team2_score === 0 &&
-                  props.admin === "YES"
-                    ? "block"
-                    : "none",
+                  isAdminRoute
+                      ? "block"
+                      : "none",
               }}
             >
               Yala

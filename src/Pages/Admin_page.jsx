@@ -1,5 +1,6 @@
-import React,{useState,useEffect} from "react";
-import Fixtures from "../Components/Fixtures";
+import React,{useState,useEffect,useCallback} from "react";
+import Hello from '../Components/Groups_sec'
+// import Fixtures from "../Components/Fixtures";
 import QuarterFinal from "../Components/QuarterFinal";
 import SemiFinal from "../Components/SemiFinal";
 import Final from "../Components/Final";
@@ -55,6 +56,19 @@ function Admin_Page(){
         }
     }
 
+    const CreateFixtures = useCallback(() => {
+        fetch("http://13.61.73.123:5000/CreateFixtures")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .catch((err) => {
+            alert("ERRRRRRRRRRRRRR" + err);
+          });
+      }, []);
+
     useEffect(() => {
         GetData();
     }, []);
@@ -63,13 +77,30 @@ function Admin_Page(){
 
     return(
         <div className="admin-page">
-            <Fixtures group_id={'A'} admin={'YES'}/>
+            <Hello />
+            {/* <Fixtures group_id={'A'} admin={'YES'}/>
             <Fixtures group_id={'B'} admin={'YES'}/>
             <Fixtures group_id={'C'} admin={'YES'}/>
-            <Fixtures group_id={'D'} admin={'YES'}/>
+            <Fixtures group_id={'D'} admin={'YES'}/> */}
             <QuarterFinal admin={'YES'}/>
             <SemiFinal admin={'YES'}/>
             <Final admin={'YES'}/>
+
+            <div className="CreateFixtures">
+                <button onClick={CreateFixtures}>Start Tournament</button>
+            </div>
+
+            <div className="QualifyQuarter">
+                <button>Qualify to Quarter-Final</button>
+            </div>
+
+            <div className="QualifySemi">
+                <button>Qualify to Semi-Final</button>
+            </div>
+
+            <div className="QualifyFinal">
+                <button>Qualify to Final</button>
+            </div>
             <div className="restart-btn">
                 <button onClick={Restart}>Restart</button>
             </div>
