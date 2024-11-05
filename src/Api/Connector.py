@@ -268,6 +268,20 @@ def who_current():
         print(f"Error: {e}")
         return jsonify({'error': 'Could not find user with current on'}), 500
 
+@app.route('/LobbyOrHome', methods=['GET'])
+def LobbyOrHome():
+    try:
+        connection = get_db_connection()
+        with connection.cursor() as cursor:
+            sql = "SELECT setting_stage from setting"
+            cursor.execute(sql)
+            response = cursor.fetchone()
+        return jsonify(response), 200
+
+    except Error as e:
+        print(f"Error: {e}")
+        return jsonify({'error': 'Problem wiht checking the lobbyorhome function'}), 500
+
 def search_player(user_id):
     try:
         connection = get_db_connection()
@@ -389,6 +403,24 @@ def check_group(group_id):
         print(f"Database connection error: {e}")
         return None
 
+@app.route('/GetPlayers', methods=['POST'])
+def return_players():
+    data = request.json
+    if not data or 'Teamid' not in data:
+        return jsonify({"error": "Teamid is required"}), 400
+    
+    team_id = data['Teamid']
+    
+    try:
+        players = get_players(team_id)
+        if players:
+            return jsonify(players)
+        else:
+            return jsonify({"error": "No players found for the given Teamid"}), 404
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "An internal error occurred"}), 500
+
 def get_players(team_id):
     try:
         connection = get_db_connection()
@@ -503,7 +535,8 @@ def create_game():
             
             connection.commit()  # Commit the transaction after all inserts
             print("Games created successfully.")
-            return "KOLO FOOL"
+            MoveFromLobby()
+            return jsonify({'message': 'Games created successfully'}), 200
             
         except Exception as e:
             print("Error in create_game function:", e)
@@ -515,6 +548,19 @@ def create_game():
     finally:
         cursor.close()
         connection.close()
+
+def MoveFromLobby():
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        sql = "UPDATE setting SET setting_stage = %s"
+        cursor.execute(sql,('Home',))
+        connection.commit()
+        cursor.close()
+        return jsonify({'Successfull with switching from lobby to home'}), 200
+    except Error as e:
+        print(f"Error: {e}")
+        return jsonify({'error': 'problem with switching from lobby to home'}), 500
 
 @app.route('/SetGameScore', methods=['POST'])
 def set_gamescore():

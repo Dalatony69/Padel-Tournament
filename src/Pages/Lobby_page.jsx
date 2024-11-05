@@ -24,7 +24,6 @@ function Lobby() {
         if (team) {
             console.log("Team found:", team);
             if (team[13] !== 'Waiting') {
-                alert('Approved!');
                 setIsWaiting(false);
             } else {
                 alert('Status is Waiting');

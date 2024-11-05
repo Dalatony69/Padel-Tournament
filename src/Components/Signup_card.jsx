@@ -16,7 +16,7 @@ function Signup_card() {
             const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json(); // Assuming the backend returns JSON
             if (data.message !== 'Lobby') {
-                navigate('/Lobby',{ state: { Teamid } });
+                navigate('/Lobby',{ state: { Teamid,UserName1,UserName2 } });
             } else {
                 navigate('/Home');
             }

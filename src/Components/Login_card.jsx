@@ -4,28 +4,47 @@ import { useNavigate } from 'react-router-dom';
 function Login_card() {
     const [Teamid, setTeamid] = useState('');
     const [Passcode, setPasscode] = useState('');
+    const [UserName1, setUserName1] = useState('');
+    const [UserName2, setUserName2] = useState('');
     const navigate = useNavigate();
 
-    const WhereTo = useCallback(async (id) => {
+    const WhereTo = useCallback(async (id,Name1,Name2) => {
         try {
+            alert(Name1+Name2);
             const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json();
             if (data.message !== 'Lobby') {
-                navigate('/Lobby',{ state: { id } });
+                navigate('/Lobby',{ state: {id,Name1,Name2} });
             } else {
-                navigate('/Home',{ state: { id } });
+                navigate('/Home',{ state: {id,Name1,Name2} });
             }
         } catch (error) {
             console.error('Error fetching WhereTo data:', error);
         }
     }, [navigate]);
 
+    const GetPlayers = async() =>{
+        try {
+            const response = await fetch('http://13.61.73.123:5000/GetPlayers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Teamid: Teamid })
+            });
+            const Players = await response.json();
+            WhereTo(Teamid, Players[0], Players[1]);
+        } catch (error) {
+            console.error('There was an error fetching the data!', error);
+        }
+    }
+    
     const handlelogin = useCallback(async () => {
         const newUser = {
             Teamid,
             Passcode,
         };
-
+    
         try {
             const response = await fetch('http://13.61.73.123:5000/ValidateUser', {
                 method: 'POST',
@@ -34,19 +53,22 @@ function Login_card() {
                 },
                 body: JSON.stringify(newUser)
             });
-
+    
             if (!response.ok) {
                 console.error('Error validating user');
                 return;
             }
-
-            const data = await response.json(); // Use response.json() if the backend returns JSON
+    
+            const data = await response.json();
             console.log('Login successful:', data);
-            WhereTo(Teamid);
+            
+            // Fetch players and navigate to the appropriate page
+            GetPlayers();
         } catch (error) {
             console.error('Error validating user:', error);
         }
     }, [Teamid, Passcode, WhereTo]);
+    
 
     return (
         <div className="login-card">
