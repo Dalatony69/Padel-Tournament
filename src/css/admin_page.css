@@ -4,13 +4,53 @@
     box-sizing: border-box;
 }
 .settings{
-    background-color: aqua;
+    /* background-color: aqua; */
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
+    height: 100vh;
 }
 .settings .title{
     width: 100%;
     display: grid;
     place-items: center;
+    flex: 2;
+    font-weight: bolder;
+    font-size: 30px;
+    text-shadow: 0 0 30px black;
 }
+.settings .holder{
+    flex: 8;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.settings .holder .cat{
+    display: flex;
+    align-items: center;
+    /* background-color: green; */
+}
+.settings .holder .cat button{
+    background-color: transparent;
+    border: 2px solid black;
+    padding: 1%;
+    border-radius: 20px;
+    flex: 2;
+    margin-right: 5%;
+    display: inline-block;
+}
+.settings .holder .cat .instruct{
+    flex: 8;
+}
+
+.settings .holder span{
+    color: red;
+    font-weight: bold;
+    height: 100%;
+    justify-content: center;
+}
+@media (max-width: 768px){
+    .settings .holder .cat button{
+        flex: 5;
+    }
+}
+

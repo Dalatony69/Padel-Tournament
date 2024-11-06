@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import Header from "../Components/Header";
 import '../css/lobby_page.css';
 import { useLocation } from 'react-router-dom';
+import Lobby_Card from '../Components/Lobby_Card'
 
 
-function Lobby() {
+function Lobby_page() {
     const [data, setData] = useState([]);
     const [Lobbydata, setLobbyData] = useState([]);
     const location = useLocation();
@@ -68,18 +69,7 @@ function Lobby() {
                     <Header />
                     <div className="lobby">
                         <div className="holder">
-                            <div className="data">
-                                {Lobbydata.map((player, index) => (
-                                    <div key={index} style={{
-                                        backgroundColor: player[4] === "YES" ? '#55aaff' : '#fff',
-                                        color: player[4] === "YES" ? 'white' : 'black',
-                                        borderRadius: '5px'
-                                    }}>
-                                        <span>{"Team " + ++index}</span>
-                                        <span> {player[1] + " & " + player[2]} </span>
-                                    </div>
-                                ))}
-                            </div>
+                            <Lobby_Card/>
                             <div className="emoji">
                                 <span className="title">
                                     The Tournament will start in 1/12/2024  9:00 PM
@@ -103,4 +93,4 @@ function Lobby() {
     
 }
 
-export default Lobby;
+export default Lobby_page;

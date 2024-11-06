@@ -1,18 +1,15 @@
 import React,{useState,useEffect,useCallback} from "react";
-import Hello from '../Components/Groups_sec'
-// import Fixtures from "../Components/Fixtures";
-// import QuarterFinal from "../Components/QuarterFinal";
-// import SemiFinal from "../Components/SemiFinal";
-// import Final from "../Components/Final";
+import GroupSec from '../Components/Groups_sec'
 import '../css/admin_page.css'
 import KnockoutSec from "../Components/Knockout_sec";
-// import { json } from "react-router-dom";
+import WaitingList_Card from "../Components/WaitingList_Card";
+import Lobby_Card from "../Components/Lobby_Card";
+
 
 function Admin_Page(){
 
-    const [WaitingListdata, setWaitingListdata] = useState([]);
+
     const [Anchor,setAnchor] = useState('');
-    // const [Acceptedid,setAcceptedid] = useState('');
 
     const Restart = async() =>{
         try{
@@ -24,39 +21,6 @@ function Admin_Page(){
         catch(e){
                 alert("Problem with DELETING " + e);
                }
-    }
-
-    const GetWaiters = async () => {
-        try {
-            const response = await fetch('http://13.61.73.123:5000/WaitingList');
-            const waitingListData = await response.json();
-            setWaitingListdata(waitingListData);
-        } catch (error) {
-            console.error('There was an error fetching the data!', error);
-        }
-    };
-
-    const Accept = async(value) =>{
-        
-        try {
-            const teamid = {
-                Teamid : value
-            }
-            const response = await fetch('http://13.61.73.123:5000/AcceptTeam', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(teamid)
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-        } catch (error) {
-            console.error('Error handling sign-up:', error);
-        }
     }
 
     const CreateFixtures = useCallback(() => {
@@ -76,15 +40,12 @@ function Admin_Page(){
         try {
             const response = await fetch('http://13.61.73.123:5000/LobbyOrHome');
             const Anchor = await response.json();
-            alert(Anchor);
             setAnchor(Anchor[0]);
-            if (Anchor === "Lobby") {
-                GetWaiters();
-            }
         } catch (error) {
             console.error('There was an error fetching the data!', error);
         }
     }
+
     useEffect(() => {
         check();
         console.log("Anchor state:", Anchor[0]);
@@ -96,63 +57,72 @@ function Admin_Page(){
         <div className="admin-page">
             {Anchor === 'Home' && (
                 <>
-                    <Hello />
+                    <GroupSec />
                     <KnockoutSec />
                 </>
             )}
             {Anchor === 'Lobby' && (
                 <div className="lobby">
                     <div className="holder">
-                        <div className="data">
-                            {WaitingListdata.map((player, index) => (
-                                <div key={index} style={{
-                                    backgroundColor: player[4] === "YES" ? '#55aaff' : '#fff',
-                                    color: player[4] === "YES" ? 'white' : 'black',
-                                    borderRadius: '5px'
-                                }}>
-                                    <span>{"Team " + ++index}</span>
-                                    <span> {player[1] + " & " + player[2]} </span>
-                                    <button onClick={() => { Accept(player[0]) }}>accept</button>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="emoji">
-                            <span className="title">
-                                The Tournament will start on 1/12/2024 at 9:00 PM
-                            </span>
-                            <div className="lucky">
-                                <div className="notes">
-                                    <span>PLEASE READ THE RULES</span>
-                                    <button>Book of Rules</button>
-                                </div>
-                                <div className="ball">
-                                    <div></div>
-                                </div>
-                            </div>
-                        </div>
+                        <WaitingList_Card/>
+                        <Lobby_Card/>
                     </div>
                 </div>
             )}
             <div className="settings">
+
                 <main className="title"><span>Tournament Setting</span></main>
-                <div className="CreateFixtures">
-                    <button onClick={CreateFixtures}>Start Tournament</button>
-                </div>
+                
+                <main className="holder">
+                    <div className="CreateFixtures cat">
+                        
+                        <button onClick={CreateFixtures}>Start Tournament</button>
+                        
+                        <div className="instruct">
+                            <span>* Getting the lobby players and starting the group-stage * </span>
+                        </div>
 
-                <div className="QualifyQuarter">
-                    <button>Qualify to Quarter-Final</button>
-                </div>
+                    </div>
 
-                <div className="QualifySemi">
-                    <button>Qualify to Semi-Final</button>
-                </div>
+                    <div className="QualifyQuarter cat">
 
-                <div className="QualifyFinal">
-                    <button>Qualify to Final</button>
-                </div>
-                <div className="restart-btn">
-                    <button onClick={Restart}>Restart</button>
-                </div>
+                        <button>Qualify to Quarter-Final</button>
+                        
+                        <div className="instruct">
+                            <span>* After Finishing the group-stage starting the quarter-final qualifying the top candidates *</span>
+                        </div>
+
+                    </div>
+
+                    <div className="QualifySemi cat">
+
+                        <button>Qualify to Semi-Final</button>
+                       
+                        <div className="instruct">
+                            <span>* After Finishing the Quarter-Final starting the Semi-final qualifying the Winners *</span>
+                        </div>
+
+                    </div>
+
+                    <div className="QualifyFinal cat">
+
+                        <button>Qualify to Final</button>
+
+                        <div className="instruct">
+                            <span>* After Finishing the Semi-Final starting the Final qualifying the Winners *</span>
+                        </div>
+
+                    </div>
+                    <div className="restart-btn cat">
+
+                        <button onClick={Restart}>Restart</button>
+
+                        <div className="instruct">
+                            <span>* Deleting all data and starting over *</span>
+                        </div>
+
+                    </div>
+                </main>
             </div>
         </div>
     );
