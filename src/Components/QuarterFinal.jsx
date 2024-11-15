@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useMemo } from "react";
+import { useLocation } from 'react-router-dom';
 
 function QuarterFinal(props) {
+    const location = useLocation();
+    const isAdminRoute = useMemo(() => location.pathname === "/Admin", [location.pathname]);
     const [A1, setA1] = useState(null);
     const [A1Score, setA1Score] = useState(null);    
     const [A2, setA2] = useState(null);
@@ -122,94 +125,95 @@ function QuarterFinal(props) {
 
     return (
         <div className="quarter-final">
+            <div className="title"><h1>Quarter-Final Qualifiers</h1></div>
             <button onClick={HandleQuarterFinal} style={{display : props.admin === 'YES' ? 'block' : 'none'}}>Show Quarter Final</button>
 
             <div className="QF one">
                 <main>
-                    <div dangerouslySetInnerHTML={{ __html: A1 || "Rank 1 Group A" }}></div><div>{A1Score}</div>
+                    <div dangerouslySetInnerHTML={{ __html: A1 || "Rank 1 Group A" }}></div><div style={{display: VisibleQF1  ? 'none' : 'block'}}>{A1Score}</div>
                 </main>
 
                 <button 
                     onClick={() => { setVisibleQF1(!VisibleQF1) }} 
-                    style={{ display: (VisibleQF1 || A1Score !== 'null' || D2Score !== 'null' || props.admin !== 'YES') ? 'none' : 'block'}}>
+                    style={{ display: (VisibleQF1 || A1Score !== 'null' || D2Score !== 'null' || !isAdminRoute) ? 'none' : 'block'}}>
                     Start
                 </button>
 
-                <div style={{ display: VisibleQF1 ? 'flex' : 'none' }}>
+                <div className="setscore" style={{ display: VisibleQF1 ? 'flex' : 'none' }}>
                     <input type="text" onChange={(e) => { setTeam1score(e.target.value) }} />
                     <button onClick={() => { HandleWinner(Q1) }}>Submit</button>
                     <input type="text" onChange={(e) => { setTeam2score(e.target.value) }} />
                 </div>
 
-                <main>
-                    <div>{D2Score}</div><div dangerouslySetInnerHTML={{ __html: D2 || "Rank 2 Group D" }}></div>
+                <main  style={{justifyContent: VisibleQF1  ? 'end' : 'space-between'}}>
+                    <div style={{display: VisibleQF1  ? 'none' : 'block'}}>{D2Score}</div><div dangerouslySetInnerHTML={{ __html: D2 || "Rank 2 Group D" }}></div>
                 </main>
             </div>
 
             <div className="QF two">
                 <main>
-                    <div dangerouslySetInnerHTML={{ __html: B1 || "Rank 1 Group B" }}></div><div>{B1Score}</div>
+                    <div dangerouslySetInnerHTML={{ __html: B1 || "Rank 1 Group B" }}></div><div style={{display: VisibleQF2  ? 'none' : 'block'}}>{B1Score}</div>
                 </main>
 
                 <button 
                     onClick={() => { setVisibleQF2(!VisibleQF2) }} 
-                    style={{ display: (VisibleQF2 || A1Score !== 'null' || D2Score !== 'null' || props.admin !== 'YES') ? 'none' : 'block'}}>
+                    style={{ display: (VisibleQF2 || A1Score !== 'null' || D2Score !== 'null' || !isAdminRoute) ? 'none' : 'block'}}>
                     Start
                 </button>
 
-                <div style={{ display: VisibleQF2 ? 'flex' : 'none' }}>
+                <div className="setscore" style={{ display: VisibleQF2 ? 'flex' : 'none' }}>
                     <input type="text" onChange={(e) => { setTeam1score(e.target.value) }} />
                     <button onClick={() => { HandleWinner(Q2) }}>Submit</button>
                     <input type="text" onChange={(e) => { setTeam2score(e.target.value) }} />
                 </div>
 
-                <main>
-                    <div>{C2Score}</div><div dangerouslySetInnerHTML={{ __html: C2 || "Rank 2 Group C" }}></div>
+                <main style={{justifyContent: VisibleQF2  ? 'end' : 'space-between'}}>
+                    <div style={{display: VisibleQF2  ? 'none' : 'block'}}>{C2Score}</div><div dangerouslySetInnerHTML={{ __html: C2 || "Rank 2 Group C" }}></div>
                 </main>
             </div>
 
             <div className="QF three">
                 <main>
-                <div dangerouslySetInnerHTML={{ __html: C1 || "Rank 1 Group C" }}></div><div>{C1Score}</div>
+                <div dangerouslySetInnerHTML={{ __html: C1 || "Rank 1 Group C" }}></div><div style={{display: VisibleQF3  ? 'none' : 'block'}}>{C1Score}</div>
                 </main>
 
                 <button 
                     onClick={() => { setVisibleQF3(!VisibleQF3) }} 
-                    style={{ display: (VisibleQF3 || A1Score !== 'null' || D2Score !== 'null'|| props.admin !== 'YES') ? 'none' : 'block' }}>
+                    style={{ display: (VisibleQF3 || A1Score !== 'null' || D2Score !== 'null'|| !isAdminRoute) ? 'none' : 'block' }}>
                     Start
                 </button>
 
-                <div style={{ display: VisibleQF3 ? 'flex' : 'none' }}>
+                <div className="setscore" style={{ display: VisibleQF3 ? 'flex' : 'none' }}>
                     <input type="text" onChange={(e) => { setTeam1score(e.target.value) }} />
                     <button onClick={() => { HandleWinner(Q3) }}>Submit</button>
                     <input type="text" onChange={(e) => { setTeam2score(e.target.value) }} />
                 </div>
 
-                <main>
-                    <div>{B2Score}</div><div dangerouslySetInnerHTML={{ __html: B2 || "Rank 2 Group B" }}></div>
+                <main style={{justifyContent: VisibleQF3  ? 'end' : 'space-between'}}>
+                    <div style={{display: VisibleQF3  ? 'none' : 'block'}}>{B2Score}</div><div dangerouslySetInnerHTML={{ __html: B2 || "Rank 2 Group B" }}></div>
                 </main>
                 
             </div>
 
             <div className="QF four">
                 <main>
-                <div dangerouslySetInnerHTML={{ __html: D1 || "Rank 1 Group D" }}></div><div>{D1Score}</div>
+                <div dangerouslySetInnerHTML={{ __html: D1 || "Rank 1 Group D" }}></div><div style={{display: VisibleQF4  ? 'none' : 'block'}}>{D1Score}</div>
                 </main>
 
                 <button 
                     onClick={() => { setVisibleQF4(!VisibleQF4) }} 
-                    style={{ display: (VisibleQF4 || A1Score !== 'null' || D2Score !== 'null' || props.admin !== 'YES') ? 'none' : 'block'}}>
+                    style={{ display: (VisibleQF4 || A1Score !== 'null' || D2Score !== 'null' || !isAdminRoute) ? 'none' : 'block'}}>
                     Start
                 </button>
 
-                <div style={{ display: VisibleQF4 ? 'flex' : 'none' }}>
+                <div className="setscore" style={{ display: VisibleQF4 ? 'flex' : 'none' }}>
                     <input type="text" onChange={(e) => { setTeam1score(e.target.value) }} />
                     <button onClick={() => { HandleWinner(Q4) }}>Submit</button>
                     <input type="text" onChange={(e) => { setTeam2score(e.target.value) }} />
                 </div>
 
-                <main>
-                    <div>{A2Score}</div><div dangerouslySetInnerHTML={{ __html: A2 || "Rank 2 Group A" }}></div>
+                <main style={{justifyContent: VisibleQF4  ? 'end' : 'space-between'}}>
+                    <div style={{display: VisibleQF4  ? 'none' : 'block'}}>{A2Score}</div><div dangerouslySetInnerHTML={{ __html: A2 || "Rank 2 Group A" }}></div>
                 </main>
                 
             </div>

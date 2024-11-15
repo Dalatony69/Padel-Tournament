@@ -1,6 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useMemo } from "react";
+import { useLocation } from 'react-router-dom';
 
 function SemiFinal(props) {
+    const location = useLocation();
+    const isAdminRoute = useMemo(() => location.pathname === "/Admin", [location.pathname]);
     const [LSF1, setLSF1] = useState(null);
     const [LSF1Score, setLSF1Score] = useState(null);    
     const [LSF2, setLSF2] = useState(null);
@@ -28,15 +31,15 @@ function SemiFinal(props) {
             const jsonData = await response.json();
 
             setLSF1(`${jsonData[0].team1_player1} <br/> ${jsonData[0].team1_player2}`);
-            setLSF1Score(jsonData[0].team1_score);
+            setLSF1Score(`${jsonData[0].team1_score}`);
             setLSF2(`${jsonData[0].team2_player1} <br/> ${jsonData[0].team2_player2}`);
-            setLSF2Score(jsonData[0].team2_score);
+            setLSF2Score(`${jsonData[0].team2_score}`);
             setLSF(`${jsonData[0].game_id}`);
 
             setRSF1(`${jsonData[1].team1_player1} <br/> ${jsonData[1].team1_player2}`);
-            setRSF1Score(jsonData[1].team1_score);
+            setRSF1Score(`${jsonData[1].team1_score}`);
             setRSF2(`${jsonData[1].team2_player1} <br/> ${jsonData[1].team2_player2}`);
-            setRSF2Score(jsonData[1].team2_score);
+            setRSF2Score(`${jsonData[1].team2_score}`);
             setRSF(`${jsonData[1].game_id}`);
 
         } catch (e) {
@@ -99,52 +102,52 @@ function SemiFinal(props) {
 
     return (
         <div className="semi-final">
+            <div className="title"><h1>Semi-Final Qualifiers</h1></div>
             <button onClick={HandleSemiFinal} style={{display : props.admin === 'YES' ? 'block' : 'none'}}>Show Semi Final</button>
 
             <div className="L SF">
                 <main>
-                    <div dangerouslySetInnerHTML={{ __html: LSF1 || "Left Semi-Final 1" }}></div><div>{LSF1Score}</div>
+                    <div dangerouslySetInnerHTML={{ __html: LSF1 || "Left Semi-Final 1" }}></div><div style={{display: VisibleLSF  ? 'block' : 'none'}}>{LSF1Score}</div>
                 </main>
                 
 
                 <button 
                     onClick={() => { setVisibleLSF(!VisibleLSF) }} 
-                    style={{ display: VisibleLSF && props.admin === 'YES' && LSF1Score === null ? 'block' : 'none' }}>
+                    style={{ display: (VisibleLSF || LSF1Score !== 'null' || LSF2Score !== 'null' || !isAdminRoute) ? 'none' : 'block'}}>
                     Start
-                    {LSF1Score}
                 </button>
 
-                <div style={{ display: VisibleLSF ? 'none' : 'flex' }}>
+                <div className="setscore" style={{ display: VisibleLSF ? 'none' : 'flex' }}>
                     <input type="text" onChange={(e) => { setTeam1score(e.target.value) }} />
                     <button onClick={() => { HandleWinner(LSF) }}>Submit</button>
                     <input type="text" onChange={(e) => { setTeam2score(e.target.value) }} />
                 </div>
 
-                <main>
-                    <div>{LSF2Score}</div><div dangerouslySetInnerHTML={{ __html: LSF2 || "Left Semi-Final 2" }}></div>
+                <main style={{justifyContent: VisibleLSF  ? 'space-between' : 'end'}}>
+                    <div style={{display: VisibleLSF  ? 'block' : 'none'}}>{LSF2Score}</div><div dangerouslySetInnerHTML={{ __html: LSF2 || "Left Semi-Final 2" }}></div>
                 </main>
                 
             </div>
 
             <div className="R SF">
                 <main>
-                <div dangerouslySetInnerHTML={{ __html: RSF1 || "Right Semi-Final 1" }}></div><div>{RSF1Score}</div>
+                <div dangerouslySetInnerHTML={{ __html: RSF1 || "Right Semi-Final 1" }}></div><div style={{display: VisibleRSF  ? 'block' : 'none'}}>{RSF1Score}</div>
                 </main>
                 
                 <button 
                     onClick={() => { setVisibleRSF(!VisibleRSF) }} 
-                    style={{ display: VisibleRSF && props.admin === 'YES' && RSF1Score === null ? 'block' : 'none' }}>
+                    style={{ display: (VisibleRSF || RSF1Score !== 'null' || RSF2Score !== 'null' || !isAdminRoute) ? 'none' : 'block'}}>
                     Start
                 </button>
 
-                <div style={{ display: VisibleRSF ? 'none' : 'flex' }}>
+                <div className="setscore" style={{ display: VisibleRSF ? 'none' : 'flex' }}>
                     <input type="text" onChange={(e) => { setTeam1score(e.target.value) }} />
                     <button onClick={() => { HandleWinner(RSF) }}>Submit</button>
                     <input type="text" onChange={(e) => { setTeam2score(e.target.value) }} />
                 </div>
                 
-                <main>
-                    <div>{RSF2Score}</div><div dangerouslySetInnerHTML={{ __html: RSF2 || "Right Semi-Final 2" }}></div>
+                <main style={{justifyContent: VisibleRSF  ? 'space-between' : 'end'}}>
+                    <div style={{display: VisibleRSF  ? 'block' : 'none'}}>{RSF2Score}</div><div dangerouslySetInnerHTML={{ __html: RSF2 || "Right Semi-Final 2" }}></div>
                 </main>
             </div>
         </div>

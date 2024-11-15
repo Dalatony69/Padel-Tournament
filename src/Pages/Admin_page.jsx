@@ -46,6 +46,45 @@ function Admin_Page(){
         }
     }
 
+    const SetQualifiers = async() =>{
+        try {
+            const response = await fetch('http://13.61.73.123:5000/SetQualifiers');
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
+        }
+        catch(e){
+            alert("Problem with SETTING QUALIFIERS " + e);
+        }
+    }
+
+    const SetSemiQualifiers = async() =>{
+        try {
+            const response = await fetch('http://13.61.73.123:5000/SetSemiQualifiers');
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
+        }
+        catch(e){
+            alert("Problem with SETTING QUALIFIERS " + e);
+        }
+    }
+
+    const SetFinalQualifiers = async() =>{
+        try {
+            const response = await fetch('http://13.61.73.123:5000/SetFinalQualifiers');
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
+        }
+        catch(e){
+            alert("Problem with SETTING QUALIFIERS " + e);
+        }
+    }
+
     useEffect(() => {
         check();
         console.log("Anchor state:", Anchor[0]);
@@ -55,20 +94,23 @@ function Admin_Page(){
 
     return(
         <div className="admin-page">
-            {Anchor === 'Home' && (
-                <>
-                    <GroupSec />
-                    <KnockoutSec />
-                </>
-            )}
-            {Anchor === 'Lobby' && (
-                <div className="lobby">
-                    <div className="holder">
-                        <WaitingList_Card/>
-                        <Lobby_Card/>
+            <div className="admin-holder">
+                {Anchor === 'Home' && (
+                    <>
+                        <GroupSec />
+                        <KnockoutSec />
+                    </>
+                )}
+                {Anchor === 'Lobby' && (
+                    <div className="lobby">
+                        <div className="holder">
+                            <WaitingList_Card/>
+                            <Lobby_Card/>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
+
             <div className="settings">
 
                 <main className="title"><span>Tournament Setting</span></main>
@@ -86,7 +128,7 @@ function Admin_Page(){
 
                     <div className="QualifyQuarter cat">
 
-                        <button>Qualify to Quarter-Final</button>
+                        <button onClick={SetQualifiers}>Qualify to Quarter-Final</button>
                         
                         <div className="instruct">
                             <span>* After Finishing the group-stage starting the quarter-final qualifying the top candidates *</span>
@@ -96,7 +138,7 @@ function Admin_Page(){
 
                     <div className="QualifySemi cat">
 
-                        <button>Qualify to Semi-Final</button>
+                        <button onClick={SetSemiQualifiers}>Qualify to Semi-Final</button>
                        
                         <div className="instruct">
                             <span>* After Finishing the Quarter-Final starting the Semi-final qualifying the Winners *</span>
@@ -106,7 +148,7 @@ function Admin_Page(){
 
                     <div className="QualifyFinal cat">
 
-                        <button>Qualify to Final</button>
+                        <button onClick={SetFinalQualifiers}>Qualify to Final</button>
 
                         <div className="instruct">
                             <span>* After Finishing the Semi-Final starting the Final qualifying the Winners *</span>

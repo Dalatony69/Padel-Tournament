@@ -31,7 +31,7 @@ function Lobby_page() {
             }
         } else {
             console.warn("Team with matching ID not found.");
-            alert("Team not found or does not have 14 elements.");  // Indicate if team[13] is missing
+            // alert("Team not found or does not have 14 elements.");  // Indicate if team[13] is missing
         }
     };
     
@@ -52,7 +52,6 @@ function Lobby_page() {
         }
     };
     
-    
 
     useEffect(() => {
         fetchData();
@@ -61,8 +60,8 @@ function Lobby_page() {
     return (
         <>
             {isWaiting ? (
-                <div className="waitinglist">
-                    Waiting For Approval
+                <div className="waitingpanel">
+                    <span>Waiting for the Host Approval</span>
                 </div>
             ) : (
                 <>
@@ -76,11 +75,8 @@ function Lobby_page() {
                                 </span>
                                 <div className="lucky">
                                     <div className="notes">
-                                        <span>PLEASE READ THE RULES</span>
+                                        <span>PLEASE READ <br/>THE RULES</span>
                                         <button>Book of Rules</button>
-                                    </div>
-                                    <div className="ball">
-                                        <div></div>
                                     </div>
                                 </div>
                             </div>

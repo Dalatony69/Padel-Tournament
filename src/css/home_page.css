@@ -170,141 +170,146 @@ body {
     border-radius: 6px;
 }
 
-
-/* Dalatony */
 .knockout-sec{
-    border: 2px solid black;
-    height: 100vh;
-    width: 100%;
-    background-color: #5075d3;
-    padding: 1%;
-    overflow:scroll ;
+    height: 70vh;
+    display: grid;
+    place-items: center;
+    /* margin-top: 10%; */
 }
 .knockout-sec .holderrr{
-    width: 100%;
+    width: 90%;
     height: 100%;
-    display: grid;
-    grid-template-rows: repeat(8,1fr);
-}
-.knockout-sec .holderrr .quarter-final{
-    grid-row-start: 8;
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 2%;
-}
-.knockout-sec .holderrr .quarter-final .QF{
-    border-radius: 20px;
-    background-color: #d1e6ff;
-    box-shadow: 0 0 10px black;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 5%;
 }
-.knockout-sec .holderrr .quarter-final .QF main{
+.quarter-final,.semi-final,.final{
     flex: 1;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.knockout-sec .holderrr .line-holder1-1{
-    grid-row-start: 7;
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    color: transparent;
-}
-/* .knockout-sec .holderrr .line-holder1-1 div{
+    flex-direction: column;
+    gap: 20px;
     border: 2px solid black;
-} */
-.knockout-sec .holderrr .line-holder1-1 .left{
-    border-left: 2px solid black;
-    border-top: 2px solid black;
-}
-.knockout-sec .holderrr .line-holder1-1 .right{
-    border-right: 2px solid black;
-    border-top: 2px solid black ;
-}
-.knockout-sec .holderrr .line-holder1-2{
-    grid-row-start: 6;
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    color: transparent;
-}
-/* .knockout-sec .holderrr .line-holder1-2 div{
-    border: 2px solid black;
-} */
-.knockout-sec .holderrr .line-holder1-2 .left{
-    border-left: 2px solid black;
-}
-.knockout-sec .holderrr .semi-final{
-    grid-row-start: 5;
-    display: grid;
-    grid-template-columns: repeat(6,1fr);
-}
-.knockout-sec .holderrr .semi-final .L{
-    grid-column-start: 2;
-    grid-column-end:3 ;
-}
-.knockout-sec .holderrr .semi-final .R{
-    grid-column-start:5;
-    grid-column-end:6;
-}
-.knockout-sec .holderrr .semi-final .SF{
-    border-radius: 20px;
-    background-color: #d1e6ff;
-    box-shadow: 0 0 10px black;
-    display: flex;
-    align-items: center;
-}
-.knockout-sec .holderrr .semi-final .SF main{
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.knockout-sec .holderrr .line-holder2-1{
-    grid-row-start: 4;
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    color: transparent;
-}
-.knockout-sec .holderrr .line-holder2-1 .left{
-    border-left: 2px solid black;
-    border-top: 2px solid black;
-}
-.knockout-sec .holderrr .line-holder2-1 .right{
-    border-right: 2px solid black;
-    border-top: 2px solid black ;
-}
-.knockout-sec .holderrr .line-holder2-2{
-    grid-row-start: 3;
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    color: transparent;
-}
-.knockout-sec .holderrr .line-holder2-2 .left{
-    border-left: 2px solid black;
-}
-.knockout-sec .holderrr .final{
-    grid-row-start: 2;
-    display: grid;
-    grid-template-columns: repeat(6,1fr);
-}
-.knockout-sec .holderrr .final .F{
-    border-radius: 20px;
-    background-color: #d1e6ff;
-    box-shadow: 0 0 10px black;
-    grid-column-start:3;
-    grid-column-end:5;
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-}
-.knockout-sec .holderrr .final .F main{
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
+    padding: 2%;
+    border-radius: 0px 20px 20px 20px;
+    box-shadow: 0px 0px 10px black;
+    /* position: relative; */
 }
 
-/* End Dalatony */
+.quarter-final .QF,.SF,.F{
+    border: 2px solid  #004080;
+    background-color: #e6f2ff;
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin: 0 auto;
+    padding: 2%;
+    border-radius: 20px;
+    font-weight: bold;
+}
+.quarter-final .QF .setscore {
+    display: flex;
+    justify-content: center;
+}
+.quarter-final .QF button{
+    background-color: #5075d3;
+    padding: 1%;
+    margin: 0 3%;
+    border: none;
+    border-radius: 10px;
+    color: whitesmoke;
+}
+.quarter-final .QF input{
+    width: 20%;
+    height: 100%;
+    margin: 0 1%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.quarter-final .QF main{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.semi-final .SF .setscore {
+    display: flex;
+    justify-content: center;
+}
+.semi-final .SF button{
+    background-color: #5075d3;
+    padding: 1%;
+    margin: 0 3%;
+    border: none;
+    border-radius: 10px;
+    color: whitesmoke;
+}
+.semi-final .SF input{
+    width: 20%;
+    height: 100%;
+    margin: 0 1%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.semi-final .SF main{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.final .F .setscore {
+    display: flex;
+    justify-content: center;
+}
+.final .F button{
+    background-color: #5075d3;
+    padding: 1%;
+    margin: 0 3%;
+    border: none;
+    border-radius: 10px;
+    color: whitesmoke;
+}
+.final .F input{
+    width: 20%;
+    height: 100%;
+    margin: 0 1%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.final .F main{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.quarter-final .title{
+    background-color:#004080;
+    color: whitesmoke;
+    padding-top: 4px;
+    border-radius: 18px 0 20px  0;
+    border-bottom: 2px solid #004080;
+    display: grid;
+    place-items: center;
+}
+.semi-final .title{
+    background-color:#004080;
+    color: whitesmoke;
+    padding-top: 4px;
+    border-radius: 18px 0 20px  0;
+    border-bottom: 2px solid #004080;
+    display: grid;
+    place-items: center;
+}
+.final .title{
+    background-color:#004080;
+    color: whitesmoke;
+    padding-top: 4px;
+    border-radius: 18px 0 20px  0;
+    border-bottom: 2px solid #004080;
+    display: grid;
+    place-items: center;
+}
 
 @media (max-width: 768px){
 
@@ -329,23 +334,27 @@ body {
         justify-content: space-evenly;
     }
     .knockout-sec{
-        height: 80vh;
-        width: 100%;
+        height: 70vh;
+        /* background-color: rgb(189, 119, 119); */
+        display: grid;
+        place-items: center;
+        /* margin-top: 20%; */
     }
-    .knockout-sec .holderrr{
-        width: 80vh;
-        transform: rotate(90deg);
-        margin: 0% 15%;
-        /* background-color: green; */
+    .quarter-final,.semi-final,.final{
+        padding: 0% 0% 5% 0%;
+        border-radius: 20px ;
     }
-    .knockout-sec .holderrr .quarter-final .QF{
-        transform: rotate(270deg);
+    .quarter-final .title{
+        border-radius: 18px 18px 0px  0;
     }
-    .knockout-sec .holderrr .semi-final .SF{
-        transform: rotate(270deg);
+    .semi-final .title{
+        border-radius: 18px 18px 0px  0;
     }
-    .knockout-sec .holderrr .final .F{
-        transform: rotate(270deg);
+    .final .title{
+        border-radius: 18px 18px 0px  0;
+    }
+    .quarter-final .QF main{
+        font-size: 15px;
     }
 
 }

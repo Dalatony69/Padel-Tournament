@@ -50,7 +50,9 @@ function WaitingList_Card(){
                     }}>
                     <span>{"Team " + ++index}</span>
                     <span> {player[1] + " & " + player[2]} </span>
-                    <button onClick={() => { Accept(player[0]) }}>accept</button>
+                    <main>
+                        <button onClick={() => { Accept(player[0]) }}>accept</button>
+                    </main>
                 </div>
                 ))}
         </div>

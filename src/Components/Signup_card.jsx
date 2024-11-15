@@ -7,7 +7,11 @@ function Signup_card() {
     const [UserName2, setUserName2] = useState('');
     const [UserPhone1, setUserPhone1] = useState('');
     const [UserPhone2, setUserPhone2] = useState('');
+    const [Email, setEmail] = useState('');
     const [Passcode, setPasscode] = useState('');
+    const [OTP, setOTP] = useState('');
+    const [OTP1, setOTP1] = useState('');
+    const [Check,setCheck] = useState(false);
     const navigate = useNavigate();
 
     const WhereTo = useCallback(async (Teamid) => {
@@ -70,10 +74,34 @@ function Signup_card() {
             console.error('Error sending email:', error);
         });
     };
+
+    const SendOTP = () =>{
+        setCheck(true);
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        setOTP(otp);
+        
+        emailjs.send('service_1a6hsjk', 'template_44zc1hj', {otp,Email}, '-npZe43yTWeFS0AAO')
+        .then((result) => {
+            console.log('Email sent successfully:', result.text);
+        }, (error) => {
+            console.error('Error sending email:', error);
+        }); 
+    }
+    const CheckOTP = () =>{
+        const x = parseInt(OTP);
+        const y = parseInt(OTP1);
+        if(x === y){
+            alert(OTP + ' = ' +OTP1)
+            handlesignup();
+        }
+        else{
+            alert('wrong'+ OTP + "" + OTP1);
+        }
+    }
     
     return (
         <div className="sign-up-card">
-            <div className="holder">
+            <div className="holder" style={{display : Check ? 'none' : 'block'}}>
                 <input 
                     type="text" 
                     placeholder="Player 1 Username" 
@@ -99,6 +127,12 @@ function Signup_card() {
                     onChange={(e) => setUserPhone2(e.target.value)} 
                 />
                 <input 
+                    type="text" 
+                    placeholder="Email" 
+                    value={Email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                />
+                <input 
                     type="password" 
                     placeholder="Password" 
                     value={Passcode} 
@@ -106,7 +140,20 @@ function Signup_card() {
                 />
             </div>
             <div className="button">
-                <button onClick={handlesignup}>Sign-up</button>
+                <button style={{display : Check ? 'none' : 'block'}} onClick={SendOTP}>Sign-up</button>
+            </div>
+
+            <div  className="OtpCheck" style={{display : Check ? 'block' : 'none'}}>
+                <main>
+                    <span>Please Enter The OTP</span>
+                    <input 
+                            type="text" 
+                            placeholder="Enter the OTP" 
+                            value={OTP1} 
+                            onChange={(e) => setOTP1(e.target.value)} 
+                        />
+                        <button onClick={CheckOTP}>Submit</button>
+                </main>
             </div>
                
         </div>

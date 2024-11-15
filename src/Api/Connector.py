@@ -147,6 +147,21 @@ def handle_ranking():
         connection.close()
         return jsonify({'message': 'Ranks updated successfully for all groups'}), 200
 
+def get_newrank(groupid):
+    try:
+        connection = get_db_connection()
+        if connection is None:
+            return jsonify({'error': 'Database connection failed'}), 500
+        cursor = connection.cursor()
+        sql = "SELECT COUNT(*) FROM team WHERE group_id = %s "
+        values = (groupid,)
+        cursor.execute(sql, values)
+        result = cursor.fetchone()
+        return (result[0]+1) if result else 0
+    except Error as e:
+        print(f"Error: {e}")
+        return jsonify({'error': 'Failed to create Team'}), 500
+
 def create_team(id_1,id_2,passcode):
 
     try:
@@ -162,7 +177,7 @@ def create_team(id_1,id_2,passcode):
 
         id = count_teams() + 1 
         group_id = check_group('A')
-        rank = 1
+        rank = get_newrank(group_id)
         sql = "INSERT INTO team (team_id, player1_id, player2_id,group_id,team_current,team_played,team_wins,team_losses,team_gd,team_point,team_rank,team_passcode,team_stage,team_request) VALUES (%s,%s, %s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         values = (id,id_1,id_2, group_id ,'YES',0,0,0,0,0,rank,passcode,'Group-Stage','Waiting')
         
@@ -698,6 +713,7 @@ def get_qualifiers():
             connection.rollback()
             return jsonify({'Database connection failed'}), 500
 
+@app.route('/SetQualifiers', methods=['GET'])
 def set_qualifiers():
     try:
         connection = get_db_connection()
@@ -743,7 +759,6 @@ def show_qualifiers():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
-        set_qualifiers()
 
         sqll = 'UPDATE setting set setting_quarterfinal = %s'
         cursor.execute(sqll, ('Show',))
@@ -847,10 +862,16 @@ def qualify_semi():
         print(f"Database connection error: {e}")
         return jsonify({'error': 'Database connection failed'}), 500
 
+@app.route('/SetSemiQualifiers', methods=['GET'])
 def set_semi():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
+
+        sqll = 'UPDATE setting set setting_semifinal = %s'
+        cursor.execute(sqll, ('Show',))
+        connection.commit()
+
         try:
             # Query for the left semi-final teams
             sql = "SELECT * FROM team WHERE team_stage = %s"
@@ -896,11 +917,6 @@ def show_semi_qualifiers():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
-        set_semi()
-
-        sqll = 'UPDATE setting set setting_semifinal = %s'
-        cursor.execute(sqll, ('Show',))
-        connection.commit()
 
         try:
             # Fetch the semi-final games
@@ -1031,10 +1047,16 @@ def qualify_final():
         print(f"Database connection error: {e}")
         return jsonify({'error': 'Database connection failed'}), 500
 
+@app.route('/SetFinalQualifiers', methods=['GET'])
 def set_Final():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
+
+        sqll = 'UPDATE setting set setting_final = %s'
+        cursor.execute(sqll, ('Show',))
+        connection.commit()
+        
         try:
             # Query for the left final teams
             sql = "SELECT * FROM team WHERE team_stage = %s"
@@ -1070,11 +1092,6 @@ def show_final_qualifiers():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
-        set_Final()
-
-        sqll = 'UPDATE setting set setting_final = %s'
-        cursor.execute(sqll, ('Show',))
-        connection.commit()
 
         try:
             # Fetch the final games
@@ -1268,18 +1285,19 @@ def terminate():
         connection = get_db_connection()
         cursor = connection.cursor()
         try:
-            sql = """TRUNCATE TABLE user;
-                    TRUNCATE TABLE team;
-                    TRUNCATE TABLE groop;
-                    TRUNCATE TABLE game;
-                    TRUNCATE TABLE setting;
-                    """
-            cursor.execute(sql)
-            result = cursor.fetchone()
-            if result:
-                return jsonify({'message': 'All Deleted Successfully'}), 200
-            else:
-                return jsonify({'message': 'Problem wiht Deletion'}), 200
+            
+            sql1 = "TRUNCATE TABLE game"
+            sql2 = "DELETE FROM team"
+            sql3 ="DELETE FROM user"
+
+            cursor.execute(sql1)
+            cursor.execute(sql2)
+            cursor.execute(sql3)
+
+            connection.commit()
+        
+            return jsonify({'message': 'All Deleted Successfully'}), 200
+     
         except Exception as e:
             print(f"Failure: {e}")
             return jsonify({'error': 'An error occurred while fetching '}), 500

@@ -13,12 +13,14 @@ function Login_card() {
             alert(Name1+Name2);
             const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json();
-            if (data.message !== 'Lobby') {
+            if (data.message === 'Lobby') {
+                alert("heloooooooooooo"+data.message);
                 navigate('/Lobby',{ state: {id,Name1,Name2} });
             } else {
                 navigate('/Home',{ state: {id,Name1,Name2} });
             }
         } catch (error) {
+            alert('errrooooooooooor')
             console.error('Error fetching WhereTo data:', error);
         }
     }, [navigate]);

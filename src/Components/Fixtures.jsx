@@ -21,7 +21,7 @@ function Fixtures(props) {
       Team2score: Team2score,
       Gameid: Gameid,
     };
-    alert(Team1score + Team2score + Gameid);
+    // alert(Team1score + Team2score + Gameid);
 
     try {
       const response = await fetch("http://13.61.73.123:5000/SetGameScore", {
@@ -35,11 +35,11 @@ function Fixtures(props) {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       } else {
-        alert("yes");
+        // alert("yes");
       }
 
       const data = await response.text();
-      alert(data);
+      // alert(data);
     } catch (error) {
       console.error("There was an error!", error);
     }
@@ -67,7 +67,7 @@ function Fixtures(props) {
         setgame(formattedData);
       })
       .catch((err) => {
-        alert("Error fetching fixtures: " + err.message);
+        // alert("Error fetching fixtures: " + err.message);
       });
   }, []);
 
@@ -103,34 +103,29 @@ function Fixtures(props) {
               <div>{fixture.team1_player2}</div>
             </div>
             
-            <div className="score-team">
+            
+            <div className="score-team" style={{display : Visible && (fixture.team1_score !== 0 || fixture.team2_score !== 0) ? 'flex' : 'none'}}>
                 <div>{fixture.team1_score}</div>
+            
                 <div>{fixture.team2_score}</div>
             </div>
-
-            <div className="right-team" style={{backgroundColor: fixture.team2_score === fixture.team1_score ? 'none' : fixture.team2_score > fixture.team1_score ? winner : loser}}>
-              <div>{fixture.team2_player1}</div>
-              <div>|</div>
-              <div>{fixture.team2_player2}</div>
-            </div>
-
             <button
-              onClick={() => setVisible(fixture.game_id)}
-              style={{
-                display:
-                  Visible !== fixture.game_id &&
-                  fixture.team1_score === 0 &&
-                  fixture.team2_score === 0 &&
-                  isAdminRoute
-                      ? "block"
-                      : "none",
-              }}
-            >
-              Yala
-            </button>
-
+                  onClick={() => setVisible(fixture.game_id)}
+                  style={{
+                    display:
+                      Visible !== fixture.game_id &&
+                      fixture.team1_score === 0 &&
+                      fixture.team2_score === 0 &&
+                      isAdminRoute
+                          ? "block"
+                          : "none",
+                  }}
+                >
+                  Yala
+               </button>
+            
             <div
-              className="setting"
+              className="setScore"
               style={{ display: Visible === fixture.game_id ? "flex" : "none" }}
             >
               <input
@@ -146,6 +141,12 @@ function Fixtures(props) {
                   setTeam2score(e.target.value);
                 }}
               />
+            </div>
+
+            <div className="right-team" style={{backgroundColor: fixture.team2_score === fixture.team1_score ? 'none' : fixture.team2_score > fixture.team1_score ? winner : loser}}>
+              <div>{fixture.team2_player1}</div>
+              <div>|</div>
+              <div>{fixture.team2_player2}</div>
             </div>
           </main>
         ))}

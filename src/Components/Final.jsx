@@ -1,6 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useMemo } from "react";
+import { useLocation } from 'react-router-dom';
 
 function Final(props) {
+    const location = useLocation();
+    const isAdminRoute = useMemo(() => location.pathname === "/Admin", [location.pathname]);
     const [F1, setF1] = useState(null);
     const [F1Score, setF1Score] = useState(null);   
     const [F2, setF2] = useState(null);
@@ -21,10 +24,10 @@ function Final(props) {
 
             const jsonData = await response.json();
 
-            setF1(`${jsonData[0].team1_player1} ${jsonData[0].team1_player2}`);
-            setF1Score(jsonData[0].team1_score);
-            setF2(`${jsonData[0].team2_player1} ${jsonData[0].team2_player2}`);
-            setF2Score(jsonData[0].team2_score);
+            setF1(`${jsonData[0].team1_player1} <br /> ${jsonData[0].team1_player2}`);
+            setF1Score(`${jsonData[0].team1_score}`);
+            setF2(`${jsonData[0].team2_player1} <br />${jsonData[0].team2_player2}`);
+            setF2Score(`${jsonData[0].team2_score}`);
             setF(`${jsonData[0].game_id}`);
 
         } catch (e) {
@@ -85,30 +88,31 @@ function Final(props) {
         // Call the async function
         checkfinal()
     }, []);
+
     return (
         <div className="final">
+            <div className="title"><h1>Final Qualifiers</h1></div>
             <button onClick={HandleFinal} style={{display : props.admin === 'YES' ? 'block' : 'none'}}>Show Final</button>
 
             <div className="F">
                 <main>
-                    <div className="F1">{F1 ? ` ${F1}` : "Final 1"}</div><div>{F1Score}</div>
+                    <div dangerouslySetInnerHTML={{ __html: F1 || "Final 1" }}></div><div style={{display: VisibleF  ? 'block' : 'none'}}>{F1Score}</div>
                 </main>
 
                 <button 
                     onClick={() => { setVisibleF(!VisibleF) }} 
-                    style={{ display: VisibleF && props.admin === 'YES' && F1Score === null ? 'block' : 'none' }}>
+                    style={{ display: (!VisibleF || F1Score !== 'null' || F2Score !== 'null' || !isAdminRoute) ? 'none' : 'block'}}>
                     Start
-                    {F1Score}
                 </button>
 
-                <div style={{ display: VisibleF ? 'none' : 'flex' }}>
+                <div className="setscore" style={{ display: VisibleF ? 'none' : 'flex' }}>
                     <input type="text" onChange={(e) => { setTeam1score(e.target.value) }} />
                     <button onClick={() => { HandleWinner(F) }}>Submit</button>
                     <input type="text" onChange={(e) => { setTeam2score(e.target.value) }} />
                 </div>
 
-                <main>
-                     <div>{F2Score}</div><div className="F2">{F2 ? ` ${F2}` : "Final 2"}</div>
+                <main style={{justifyContent: VisibleF  ? 'space-between' : 'end'}}>
+                    <div style={{display: VisibleF  ? 'block' : 'none'}}>{F2Score}</div><div dangerouslySetInnerHTML={{ __html: F2 || "Final 1" }}></div>
                 </main>
             </div>
         </div>

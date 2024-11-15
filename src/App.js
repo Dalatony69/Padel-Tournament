@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import './App.css';
+import './css/auth_page.css'
 import AuthPage from './Pages/Auth_page';
 import HomePage from './Pages/Home_page';
 import AdminPage from './Pages/Admin_page';
