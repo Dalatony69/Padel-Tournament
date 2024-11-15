@@ -1,95 +1,118 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from 'react-router-dom';
 
+// Reusable Input Component
+const InputField = ({ value, onChange, placeholder, type = "text", name }) => (
+    <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        name={name}
+    />
+);
+
+// Reusable Button Component
+const Button = ({ onClick, label, style }) => (
+    <button onClick={onClick} style={style}>{label}</button>
+);
+
 function Login_card() {
-    const [Teamid, setTeamid] = useState('');
-    const [Passcode, setPasscode] = useState('');
-    const [UserName1, setUserName1] = useState('');
-    const [UserName2, setUserName2] = useState('');
+    // Combined state object for user data
+    const [user, setUser] = useState({
+        Teamid: '',
+        Passcode: '',
+    });
+    
     const navigate = useNavigate();
 
-    const WhereTo = useCallback(async (id,Name1,Name2) => {
+    // Function to navigate based on response data
+    const WhereTo = useCallback(async (id, Name1, Name2) => {
         try {
-            alert(Name1+Name2);
             const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json();
+            
             if (data.message === 'Lobby') {
-                alert("heloooooooooooo"+data.message);
-                navigate('/Lobby',{ state: {id,Name1,Name2} });
+                navigate('/Lobby', { state: { id, Name1, Name2 } });
             } else {
-                navigate('/Home',{ state: {id,Name1,Name2} });
+                navigate('/Home', { state: { id, Name1, Name2 } });
             }
         } catch (error) {
-            alert('errrooooooooooor')
             console.error('Error fetching WhereTo data:', error);
+            alert('An error occurred. Please try again.');
         }
     }, [navigate]);
 
-    const GetPlayers = async() =>{
+    // Function to fetch players and navigate to appropriate page
+    const GetPlayers = async () => {
         try {
             const response = await fetch('http://13.61.73.123:5000/GetPlayers', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ Teamid: Teamid })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ Teamid: user.Teamid }),
             });
             const Players = await response.json();
-            WhereTo(Teamid, Players[0], Players[1]);
+            WhereTo(user.Teamid, Players[0], Players[1]);
         } catch (error) {
-            console.error('There was an error fetching the data!', error);
+            console.error('There was an error fetching the players!', error);
+            alert('Failed to fetch player data. Please try again.');
         }
-    }
-    
-    const handlelogin = useCallback(async () => {
-        const newUser = {
-            Teamid,
-            Passcode,
-        };
-    
+    };
+
+    // Function to handle login form submission
+    const handleLogin = useCallback(async () => {
+        const { Teamid, Passcode } = user;
         try {
             const response = await fetch('http://13.61.73.123:5000/ValidateUser', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newUser)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ Teamid, Passcode }),
             });
-    
             if (!response.ok) {
                 console.error('Error validating user');
+                alert('Invalid credentials. Please try again.');
                 return;
             }
-    
+
             const data = await response.json();
             console.log('Login successful:', data);
-            
+
             // Fetch players and navigate to the appropriate page
             GetPlayers();
         } catch (error) {
             console.error('Error validating user:', error);
+            alert('An error occurred while validating user. Please try again.');
         }
-    }, [Teamid, Passcode, WhereTo]);
-    
+    }, [user, WhereTo]);
+
+    // Handler for input changes
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setUser((prevUser) => ({
+            ...prevUser,
+            [name]: value,
+        }));
+    };
 
     return (
         <div className="login-card">
             <div className="holder">
-                <input 
-                    type="text" 
-                    placeholder="Team-ID" 
-                    value={Teamid} 
-                    onChange={(e) => setTeamid(e.target.value)} 
+                <InputField
+                    name="Teamid"
+                    value={user.Teamid}
+                    onChange={handleInputChange}
+                    placeholder="Team-ID"
                 />
-                <input 
+                <InputField
+                    name="Passcode"
                     type="password"
-                    placeholder="Password" 
-                    value={Passcode} 
-                    onChange={(e) => setPasscode(e.target.value)} 
+                    value={user.Passcode}
+                    onChange={handleInputChange}
+                    placeholder="Password"
                 />
             </div>
             <div className="button">
-                <button onClick={handlelogin}>Login</button>
+                <Button onClick={handleLogin} label="Login" />
             </div>
         </div>
     );

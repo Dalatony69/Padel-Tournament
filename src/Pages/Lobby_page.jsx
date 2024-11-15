@@ -1,65 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "../Components/Header";
 import '../css/lobby_page.css';
 import { useLocation } from 'react-router-dom';
-import Lobby_Card from '../Components/Lobby_Card'
-
+import Lobby_Card from '../Components/Lobby_Card';
 
 function Lobby_page() {
-    const [data, setData] = useState([]);
-    const [Lobbydata, setLobbyData] = useState([]);
+    const [state, setState] = useState({
+        data: [],
+        isWaiting: true,
+        teamId: null
+    });
+
     const location = useLocation();
     const { id } = location.state || {};
-    const [isWaiting, setIsWaiting] = useState(true);
 
-
-    const check = (teams) => {
-        console.log("All team IDs (first index of each team):");
-        teams.forEach((team, index) => {
-            console.log(`Team ${index + 1} ID:, ${team[0]}`);
-        });
+    // To prevent any unnecessary re-renders
+    const checkTeamStatus = useCallback((teams) => {
+        const team = teams.find((team) => team[0] === Number(id));
         
-        console.log("Checking for Team ID:", id);
-        const team = teams.find(team => team[0] === Number(id));
-    
         if (team) {
             console.log("Team found:", team);
             if (team[13] !== 'Waiting') {
-                setIsWaiting(false);
+                setState((prevState) => ({
+                    ...prevState,
+                    isWaiting: false
+                }));
             } else {
-                alert('Status is Waiting');
+                console.log('Status is Waiting');
             }
         } else {
             console.warn("Team with matching ID not found.");
-            // alert("Team not found or does not have 14 elements.");  // Indicate if team[13] is missing
         }
-    };
-    
-    const fetchData = async () => {
+    }, [id]);
+
+    const fetchData = useCallback(async () => {
         try {
-            const responses = await Promise.all([
-                fetch('http://13.61.73.123:5000/GetData'),
-                fetch('http://13.61.73.123:5000/LobbyData'),
-            ]);
+            const response = await fetch('http://13.61.73.123:5000/GetData');
+            const teamsData = await response.json();
 
-            const [teamsData, lobbyData] = await Promise.all(responses.map(res => res.json()));
-
-            setData(teamsData);
-            setLobbyData(lobbyData);
-            check(teamsData);  // Only call check once here
+            setState((prevState) => ({
+                ...prevState,
+                data: teamsData
+            }));
+            checkTeamStatus(teamsData);
         } catch (error) {
-            console.error('There was an error fetching the data!', error);
+            console.error('Error fetching data:', error);
         }
-    };
-    
+    }, [checkTeamStatus]);
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
     return (
         <>
-            {isWaiting ? (
+            {state.isWaiting ? (
                 <div className="waitingpanel">
                     <span>Waiting for the Host Approval</span>
                 </div>
@@ -68,14 +63,14 @@ function Lobby_page() {
                     <Header />
                     <div className="lobby">
                         <div className="holder">
-                            <Lobby_Card/>
+                            <Lobby_Card />
                             <div className="emoji">
                                 <span className="title">
-                                    The Tournament will start in 1/12/2024  9:00 PM
+                                    The Tournament will start on 1/12/2024 at 9:00 PM
                                 </span>
                                 <div className="lucky">
                                     <div className="notes">
-                                        <span>PLEASE READ <br/>THE RULES</span>
+                                        <span>PLEASE READ <br /> THE RULES</span>
                                         <button>Book of Rules</button>
                                     </div>
                                 </div>
@@ -86,7 +81,6 @@ function Lobby_page() {
             )}
         </>
     );
-    
 }
 
 export default Lobby_page;

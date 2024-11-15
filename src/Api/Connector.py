@@ -1132,25 +1132,30 @@ def show_final_qualifiers():
         print(f"Database connection error: {e}")
         return jsonify({'error': 'Database connection failed'}), 500
 
-@app.route('/WhereTo', methods=['GET']) 
+@app.route('/WhereTo', methods=['GET'])
 def WhereTo():
     try:
+        # Establish database connection
         connection = get_db_connection()
         cursor = connection.cursor()
-        try:
-            sql = 'SELECT setting_stage From setting '
-            cursor.execute(sql)
-            setting_stage = cursor.fetchone()
+
+        # Execute SQL query
+        sql = 'SELECT setting_stage FROM setting'
+        cursor.execute(sql)
+        result = cursor.fetchone()  # Fetch the first row
+
+        if result:  # Ensure result is not None
+            setting_stage = result[0]  # Extract the first value from the tuple
             if setting_stage == 'Lobby':
                 return jsonify({'message': 'Lobby'}), 200
             else:
                 return jsonify({'message': 'game'}), 200
-        except Exception as e:
-            print(f"Failure: {e}")
-            return jsonify({'error': 'An error occurred while fetching '}), 500
+        else:
+            return jsonify({'error': 'No setting_stage found'}), 404
+
     except Exception as e:
-            print(f"Failure: {e}")
-            return jsonify({'error': 'An error occurred while fetching'}), 500
+        print(f"Error occurred: {e}")
+        return jsonify({'error': 'An internal server error occurred'}), 500
 
 @app.route('/CheckSettingQuarter', methods=['GET']) 
 def check_setting_quarter():
