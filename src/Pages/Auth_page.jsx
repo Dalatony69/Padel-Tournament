@@ -11,3 +11,5 @@ function Auth(){
     );
 }
 export default Auth;
+
+// FULLY FINISHED WAITING FOR THE DOUBLE CHECK

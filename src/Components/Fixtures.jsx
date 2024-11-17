@@ -1,158 +1,126 @@
-import React, { useState, useEffect, useCallback ,useMemo} from "react";
-import Modal from '../Components/Modal';  // Import the Modal component
-import { useLocation } from 'react-router-dom';
+import React, { useState } from "react";
+import Modal from "../Components/Modal"; // Import the Modal component
+import { useLocation } from "react-router-dom";
 
-function Fixtures(props) {
-  const [game, setgame] = useState([]);
-  const [Fixtures, setFixtures] = useState([]);
-  const [Visible, setVisible] = useState(false);
-  const [Team1score, setTeam1score] = useState();
-  const [Team2score, setTeam2score] = useState();
-  const location = useLocation();
-  const isAdminRoute = useMemo(() => location.pathname === "/Admin", [location.pathname]);
+function Fixtures({ fixtures }) {
+    const [visible, setVisible] = useState(false);
+    const [team1Score, setTeam1Score] = useState("");
+    const [team2Score, setTeam2Score] = useState("");
+    const [editGameId, setEditGameId] = useState(null); // Tracks the game being edited
+    const location = useLocation();
+    const isAdminRoute = location.pathname === "/Admin";
 
-  
-  const loser = "#B81D1344";
-  const winner = "#00845044";
+    const loserColor = "#B81D1344";
+    const winnerColor = "#00845044";
 
-  const HandleGame = async (Gameid) => {
-    const newgame = {
-      Team1score: Team1score,
-      Team2score: Team2score,
-      Gameid: Gameid,
-    };
-    // alert(Team1score + Team2score + Gameid);
+    const handleGame = async gameId => {
+        try {
+            const payload = { Team1score: team1Score, Team2score: team2Score, Gameid: gameId };
+            const response = await fetch("http://13.61.73.123:5000/SetGameScore", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
 
-    try {
-      const response = await fetch("http://13.61.73.123:5000/SetGameScore", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newgame),
-      });
+            if (!response.ok) throw new Error("Failed to update game score");
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
-        // alert("yes");
-      }
-
-      const data = await response.text();
-      // alert(data);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
-  };
-
-  const GetFixtures = useCallback(() => {
-    fetch("http://13.61.73.123:5000/GetFixtures")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+            setEditGameId(null);
+        } catch (error) {
+            console.error("Error updating game score:", error);
         }
-        return response.json();
-      })
-      .then((jsonData) => {
-        const formattedData = jsonData.map((row) => ({
-          game_id: row.game_id,
-          team1_player1: row.team1_player1,
-          team1_player2: row.team1_player2,
-          team1_score: row.team1_score,
-          team2_player1: row.team2_player1,
-          team2_player2: row.team2_player2,
-          team2_score: row.team2_score,
-          game_stage: row.game_stage,
-        }));
-        setgame(formattedData);
-      })
-      .catch((err) => {
-        // alert("Error fetching fixtures: " + err.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    GetFixtures();
-  }, [GetFixtures]);
-
-  useEffect(() => {
-    const manageFixtures = () => {
-      const filteredFixtures = game.filter(
-        (g) => g.game_stage === `Group ${props.group_id}`
-      );
-      setFixtures(filteredFixtures);
     };
-    manageFixtures();
-  }, [game, props.group_id]);
 
-  return (
-    <div className="Fixtures">
-      <div>
-  
-        <button onClick={() => setVisible(!Visible)}>
-          {Visible ? "Hide" : "Show"} Results
-        </button>
-      </div>
-
-      <Modal isVisible={Visible} onClose={() => setVisible(false)} className="modal-container">
-        {Fixtures.map((fixture, index) => (
-          <main key={index}>
-            <div className="left-team" style={{backgroundColor: fixture.team1_score === fixture.team2_score ? 'none' : fixture.team1_score > fixture.team2_score ? winner : loser}}>
-              <div>{fixture.team1_player1}</div>
-              <div>|</div>
-              <div>{fixture.team1_player2}</div>
-            </div>
-            
-            
-            <div className="score-team" style={{display : Visible && (fixture.team1_score !== 0 || fixture.team2_score !== 0) ? 'flex' : 'none'}}>
-                <div>{fixture.team1_score}</div>
-            
-                <div>{fixture.team2_score}</div>
-            </div>
-            <button
-                  onClick={() => setVisible(fixture.game_id)}
-                  style={{
-                    display:
-                      Visible !== fixture.game_id &&
-                      fixture.team1_score === 0 &&
-                      fixture.team2_score === 0 &&
-                      isAdminRoute
-                          ? "block"
-                          : "none",
-                  }}
-                >
-                  Yala
-               </button>
-            
-            <div
-              className="setScore"
-              style={{ display: Visible === fixture.game_id ? "flex" : "none" }}
-            >
-              <input
-                type="text"
-                onChange={(e) => {
-                  setTeam1score(e.target.value);
-                }}
-              />
-              <button onClick={() => HandleGame(fixture.game_id)}>Save</button>
-              <input
-                type="text"
-                onChange={(e) => {
-                  setTeam2score(e.target.value);
-                }}
-              />
+    return (
+        <div className="Fixtures">
+            <div>
+                <button onClick={() => setVisible(!visible)}>
+                    {visible ? "Hide" : "Show"} Results
+                </button>
             </div>
 
-            <div className="right-team" style={{backgroundColor: fixture.team2_score === fixture.team1_score ? 'none' : fixture.team2_score > fixture.team1_score ? winner : loser}}>
-              <div>{fixture.team2_player1}</div>
-              <div>|</div>
-              <div>{fixture.team2_player2}</div>
-            </div>
-          </main>
-        ))}
-      </Modal>
-    </div>
-  );
+            <Modal isVisible={visible} onClose={() => setVisible(false)} className="modal-container">
+                {fixtures.map(fixture => {
+                    const isEditing = editGameId === fixture.game_id;
+                    const isUnplayedMatch =
+                        fixture.team1_score === 0 && fixture.team2_score === 0; // Match is unplayed
+
+                    const team1Style = {
+                        backgroundColor:
+                            isUnplayedMatch
+                                ? "none" // No background color if the match isn't played
+                                : fixture.team1_score > fixture.team2_score
+                                ? winnerColor
+                                : loserColor
+                    };
+
+                    const team2Style = {
+                        backgroundColor:
+                            isUnplayedMatch
+                                ? "none" // No background color if the match isn't played
+                                : fixture.team2_score > fixture.team1_score
+                                ? winnerColor
+                                : loserColor
+                    };
+
+                    return (
+                        <main key={fixture.game_id}>
+                            {/* Team 1 Details */}
+                            <div className="left-team" style={team1Style}>
+                                <div>{fixture.team1_player1}</div>
+                                <div>|</div>
+                                <div>{fixture.team1_player2}</div>
+                            </div>
+
+                            {/* Show Scores or Edit Button */}
+                            {visible && (
+                                <>
+                                    {isUnplayedMatch && isAdminRoute && !isEditing && (
+                                        // Show Edit Button only if the match is unplayed
+                                        <button onClick={() => setEditGameId(fixture.game_id)}>Edit</button>
+                                    )}
+                                    {!isUnplayedMatch && !isEditing && (
+                                        // Show scores only if the match is played
+                                        <div className="score-team">
+                                            <div>{fixture.team1_score}</div>
+                                            <div>{fixture.team2_score}</div>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+
+                            {/* Scoring Section */}
+                            {isEditing && (
+                                <div className="setScore">
+                                    <input
+                                        type="text"
+                                        value={team1Score}
+                                        onChange={e => setTeam1Score(e.target.value)}
+                                        placeholder="Team 1 Score"
+                                    />
+                                    <button onClick={() => handleGame(fixture.game_id)}>Save</button>
+                                    <input
+                                        type="text"
+                                        value={team2Score}
+                                        onChange={e => setTeam2Score(e.target.value)}
+                                        placeholder="Team 2 Score"
+                                    />
+                                </div>
+                            )}
+
+                            {/* Team 2 Details */}
+                            <div className="right-team" style={team2Style}>
+                                <div>{fixture.team2_player1}</div>
+                                <div>|</div>
+                                <div>{fixture.team2_player2}</div>
+                            </div>
+                        </main>
+                    );
+                })}
+            </Modal>
+        </div>
+    );
 }
 
 export default Fixtures;
+
+// FULLY FINISHED WAITING FOR THE DOUBLE CHECK

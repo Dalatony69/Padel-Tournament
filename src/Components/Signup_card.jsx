@@ -207,3 +207,5 @@ function Signup_card() {
 }
 
 export default Signup_card;
+
+// FULLY FINISHED WAITING FOR THE DOUBLE CHECK

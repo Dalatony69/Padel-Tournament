@@ -44,7 +44,7 @@ function Login_card() {
     }, [navigate]);
 
     // Function to fetch players and navigate to appropriate page
-    const GetPlayers = async () => {
+    const GetPlayers = useCallback(async () => {
         try {
             const response = await fetch('http://13.61.73.123:5000/GetPlayers', {
                 method: 'POST',
@@ -57,7 +57,7 @@ function Login_card() {
             console.error('There was an error fetching the players!', error);
             alert('Failed to fetch player data. Please try again.');
         }
-    };
+    }, [user.Teamid, WhereTo]); 
 
     // Function to handle login form submission
     const handleLogin = useCallback(async () => {
@@ -83,7 +83,7 @@ function Login_card() {
             console.error('Error validating user:', error);
             alert('An error occurred while validating user. Please try again.');
         }
-    }, [user, WhereTo]);
+    }, [user, GetPlayers]);
 
     // Handler for input changes
     const handleInputChange = (e) => {
@@ -119,3 +119,5 @@ function Login_card() {
 }
 
 export default Login_card;
+
+// FULLY FINISHED WAITING FOR THE DOUBLE CHECK

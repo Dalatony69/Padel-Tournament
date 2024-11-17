@@ -1,39 +1,50 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Group from "./Group";
-import '../css/home_page.css';
+import "../css/home_page.css";
 
 function Group_sec() {
     const [data, setData] = useState([]);
-    const [groups, setGroups] = useState([]);
+    const [fixtures, setFixtures] = useState([]);
 
-    const NumOfGroups = useCallback(() => {
+    
+    const NumOfGroups = useMemo(() => {
         if (data.length <= 4) return 1;
         if (data.length <= 8) return 2;
         if (data.length <= 12) return 3;
         return 4;
     }, [data.length]);
 
-    const updateGroups = useCallback(() => {
-        const seq = ['A', 'B', 'C', 'D'];
-        const groupCount = NumOfGroups();
+    // Group the data and sort it in one pass
+    const groups = useMemo(() => {
+        const seq = ["A", "B", "C", "D"];
+        const groupCount = NumOfGroups;
         const newGroups = [];
 
         for (let i = 0; i < groupCount; i++) {
-            const groupData = data.filter(item => item.group === seq[i]);
-            groupData.sort((a, b) => a.team_rank - b.team_rank);
+            const groupData = data
+                .filter(item => item.group === seq[i])
+                .sort((a, b) => a.team_rank - b.team_rank);
+
+            // Pass both group data and filtered fixtures to Group
             newGroups.push(
-                <Group key={seq[i]} data={groupData} group_id={seq[i]} />
+                <Group
+                    key={seq[i]}
+                    data={groupData}
+                    group_id={seq[i]}
+                    fixtures={fixtures.filter(f => f.game_stage === `Group ${seq[i]}`)}
+                />
             );
         }
 
-        setGroups(newGroups);
-    }, [data, NumOfGroups]);
+        return newGroups;
+    }, [data, fixtures, NumOfGroups]);
 
+    // Fetch data on mount
     useEffect(() => {
-        const GetData = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch('http://13.61.73.123:5000/GetData');
-                if (!response.ok) throw new Error('Network response was not ok');
+                const response = await fetch("http://13.61.73.123:5000/GetData");
+                if (!response.ok) throw new Error("Network response was not ok");
 
                 const jsonData = await response.json();
                 const formattedData = jsonData.map(row => ({
@@ -57,20 +68,36 @@ function Group_sec() {
             }
         };
 
-        GetData();
+        const fetchFixtures = async () => {
+            try {
+                const response = await fetch("http://13.61.73.123:5000/GetFixtures");
+                if (!response.ok) throw new Error("Failed to fetch fixtures");
+                const jsonData = await response.json();
+
+                const formattedData = jsonData.map(row => ({
+                    game_id: row.game_id,
+                    team1_player1: row.team1_player1,
+                    team1_player2: row.team1_player2,
+                    team1_score: row.team1_score,
+                    team2_player1: row.team2_player1,
+                    team2_player2: row.team2_player2,
+                    team2_score: row.team2_score,
+                    game_stage: row.game_stage
+                }));
+
+                setFixtures(formattedData);
+            } catch (error) {
+                console.error("Error fetching fixtures:", error);
+            }
+        };
+
+        fetchData();
+        fetchFixtures();
     }, []);
 
-    useEffect(() => {
-        if (data.length > 0) {
-            updateGroups();
-        }
-    }, [data, updateGroups]);
-
-    return (
-        <div className="group-sec">
-            {groups}
-        </div>
-    );
+    return <div className="group-sec">{groups}</div>;
 }
 
 export default Group_sec;
+
+// FULLY FINISHED WAITING FOR THE DOUBLE CHECK

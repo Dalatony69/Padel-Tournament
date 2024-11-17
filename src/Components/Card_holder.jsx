@@ -23,3 +23,5 @@ function CardHolder() {
 }
 
 export default CardHolder;
+
+// FULLY FINISHED WAITING FOR THE DOUBLE CHECK

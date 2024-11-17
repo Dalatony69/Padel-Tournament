@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function Modal({ isVisible, onClose, children }) {
   if (!isVisible) return null;
@@ -9,12 +9,8 @@ function Modal({ isVisible, onClose, children }) {
         <button className="close-btn" onClick={onClose}>
           X
         </button>
-
         <h1>Match Results</h1>
-
-        <div className="modal-body">
-          {children}
-        </div>
+        <div className="modal-body">{children}</div>
       </div>
     </div>
   );
