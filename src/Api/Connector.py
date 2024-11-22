@@ -232,23 +232,26 @@ def validate_user():
 
 @app.route('/AcceptTeam', methods=['POST'])
 def accept_team():
-    
+
     try:
         data = request.json
-
-        if not data:
-             return jsonify({'error': 'No input data provided'}), 400
-
         team_id = data['Teamid']
+
         connection = get_db_connection()
         cursor = connection.cursor()
-        sql = "UPDATE team SET team_request = %s WHERE team_id = %s"
-        values = ('Accepted',team_id)
-        cursor.execute(sql, values)
-        connection.commit()
-        cursor.close()
-        connection.close()
-        return jsonify({'message': 'Team request accepted successfully'}), 200
+        sql = "SELECT COUNT(*) FROM team WHERE team_request = 'Accepted' "
+        cursor.execute(sql)
+        count = cursor.fetchone()
+        if count[0] == 16:
+            return jsonify({'message': 'Maximum Limit'}), 400
+        else:
+            sql = "UPDATE team SET team_request = %s WHERE team_id = %s"
+            values = ('Accepted',team_id)
+            cursor.execute(sql, values)
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return jsonify({'message': 'Team request accepted successfully'}), 200
 
     except Error as e:
         print(f"Error: {e}")
@@ -1293,11 +1296,19 @@ def terminate():
             
             sql1 = "TRUNCATE TABLE game"
             sql2 = "DELETE FROM team"
-            sql3 ="DELETE FROM user"
+            sql3 = "DELETE FROM user"
+            sql4 = "UPDATE setting SET setting_quarterfinal = 'Hide' "
+            sql5 = "UPDATE setting SET setting_semifinal = 'Hide' "
+            sql6 = "UPDATE setting SET setting_final = 'Hide' "
+            sql7 = "UPDATE setting SET setting_stage = 'Lobby' "
 
             cursor.execute(sql1)
             cursor.execute(sql2)
             cursor.execute(sql3)
+            cursor.execute(sql4)
+            cursor.execute(sql5)
+            cursor.execute(sql6)
+            cursor.execute(sql7)
 
             connection.commit()
         

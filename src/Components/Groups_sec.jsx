@@ -5,6 +5,7 @@ import "../css/home_page.css";
 function Group_sec() {
     const [data, setData] = useState([]);
     const [fixtures, setFixtures] = useState([]);
+    const [Loading,setLoading] = useState(true);
 
     
     const NumOfGroups = useMemo(() => {
@@ -35,7 +36,6 @@ function Group_sec() {
                 />
             );
         }
-
         return newGroups;
     }, [data, fixtures, NumOfGroups]);
 
@@ -89,13 +89,14 @@ function Group_sec() {
             } catch (error) {
                 console.error("Error fetching fixtures:", error);
             }
+            setLoading(false);
         };
 
         fetchData();
         fetchFixtures();
     }, []);
 
-    return <div className="group-sec">{groups}</div>;
+    return <div className="group-sec">{Loading ? 'Loading' : groups}</div>;
 }
 
 export default Group_sec;

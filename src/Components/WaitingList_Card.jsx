@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
+import AlertCard from "./Alert_Card";
 
 function WaitingList_Card() {
+
+    const [AlertVisible, setAlertVisible] = useState(false);
+    const [AlertHeader,setAlertHeader] = useState('');
+    const [AlertType,setAlertType] = useState('');
+    
     const [state, setState] = useState({
         waitingListData: [],
     });
@@ -34,8 +40,15 @@ function WaitingList_Card() {
                 body: JSON.stringify(teamid),
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+            if (response.message === 'Maximum Limit') {
+                setAlertHeader('The Lobby is Full at 16 Players');
+                setAlertType('GREEN');
+                setAlertVisible(true);
+            }
+            else{
+                setAlertHeader('The Team is Added to the Lobby');
+                setAlertType('GREEN');
+                setAlertVisible(true);
             }
         } catch (error) {
             console.error('Error handling accept team:', error);
@@ -48,6 +61,7 @@ function WaitingList_Card() {
 
     return (
         <div className="data">
+            {AlertVisible && <AlertCard Header={AlertHeader} Type={AlertType}/>}
             {state.waitingListData.map((player, index) => (
                 <div
                     key={index}

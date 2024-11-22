@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import Modal from "../Components/Modal"; // Import the Modal component
 import { useLocation } from "react-router-dom";
+import AlertCard from "./Alert_Card";
+
 
 function Fixtures({ fixtures }) {
+    const [AlertVisible, setAlertVisible] = useState(false);
+    const [AlertHeader,setAlertHeader] = useState('');
+    const [AlertType,setAlertType] = useState('');
     const [visible, setVisible] = useState(false);
     const [team1Score, setTeam1Score] = useState("");
     const [team2Score, setTeam2Score] = useState("");
@@ -24,6 +29,9 @@ function Fixtures({ fixtures }) {
 
             if (!response.ok) throw new Error("Failed to update game score");
 
+            setAlertHeader('Match Submitted Successfully');
+            setAlertType('GREEN');
+            setAlertVisible(true);
             setEditGameId(null);
         } catch (error) {
             console.error("Error updating game score:", error);
@@ -32,6 +40,9 @@ function Fixtures({ fixtures }) {
 
     return (
         <div className="Fixtures">
+
+            {AlertVisible && <AlertCard Header={AlertHeader} Type={AlertType}/>}
+
             <div>
                 <button onClick={() => setVisible(!visible)}>
                     {visible ? "Hide" : "Show"} Results
@@ -78,7 +89,7 @@ function Fixtures({ fixtures }) {
                                         // Show Edit Button only if the match is unplayed
                                         <button onClick={() => setEditGameId(fixture.game_id)}>Edit</button>
                                     )}
-                                    {!isUnplayedMatch && !isEditing && (
+                                    {!isEditing && !isAdminRoute &&(
                                         // Show scores only if the match is played
                                         <div className="score-team">
                                             <div>{fixture.team1_score}</div>
