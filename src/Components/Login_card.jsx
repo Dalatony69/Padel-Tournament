@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from 'react-router-dom';
+import { bouncy } from 'ldrs'
 
 // Reusable Input Component
 const InputField = ({ value, onChange, placeholder, type = "text", name }) => (
@@ -25,6 +26,8 @@ function Login_card() {
     });
     
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    bouncy.register()
 
     // Function to navigate based on response data
     const WhereTo = useCallback(async (id, Name1, Name2) => {
@@ -62,6 +65,7 @@ function Login_card() {
     // Function to handle login form submission
     const handleLogin = useCallback(async () => {
         const { Teamid, Passcode } = user;
+        setLoading(true);
         try {
             const response = await fetch('http://13.61.73.123:5000/ValidateUser', {
                 method: 'POST',
@@ -112,7 +116,15 @@ function Login_card() {
                 />
             </div>
             <div className="button">
-                <Button onClick={handleLogin} label="Login" />
+
+                    {
+                        loading ?
+                        <div className="loading-spinner" style={{display : 'flex' , justifyContent : 'center'}}><l-bouncy size="45" speed="1.75" color="black"></l-bouncy></div>
+                        :
+                        <Button onClick={handleLogin} label="Login" />
+                    }
+
+                
             </div>
         </div>
     );

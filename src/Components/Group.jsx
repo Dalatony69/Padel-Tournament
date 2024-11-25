@@ -20,7 +20,7 @@ function Group({ data, group_id, fixtures }) {
 
     return (
         <div className="Group">
-            {/* Header Row */}
+        
             <GroupRow
                 rank={"Rank"}
                 player1={"Player 1"}
@@ -30,7 +30,6 @@ function Group({ data, group_id, fixtures }) {
                 losses={"L"}
                 points={"Pts"}
             />
-            {/* Render rows or loading message */}
             {rows.length > 0 ? rows : "Loading..."}
             {/* Fixtures Component */}
             <Fixtures group_id={group_id} fixtures={fixtures} admin={"NO"} />

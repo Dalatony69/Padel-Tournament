@@ -114,6 +114,7 @@
 
 .auth-page {
     height: 100vh;
+    background-image: url(../);
 }
 
 .auth-page .holder{

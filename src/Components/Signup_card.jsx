@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
+import { bouncy } from 'ldrs'
+
+// Default values shown
+
 
 const InputField = ({ value, onChange, placeholder, type = "text", name }) => (
     <input
@@ -36,6 +40,7 @@ function Signup_card() {
     const [loading, setLoading] = useState(false);
     const [check, setCheck] = useState(false);
     const navigate = useNavigate();
+    bouncy.register()
 
     // Handle input changes
     const handleInputChange = (e) => {
@@ -100,7 +105,7 @@ function Signup_card() {
             setError(error.message); // Display error message
             console.error('Error handling sign-up:', error);
         } finally {
-            setLoading(false);
+            setLoading(true);
         }
     };
 
@@ -197,11 +202,14 @@ function Signup_card() {
                         onChange={(e) => setOtpData((prev) => ({ ...prev, entered: e.target.value }))}
                         name="OTP"
                     />
-                    <Button label="Submit" onClick={CheckOTP} />
+                    {
+                        loading ?
+                        <div className="loading-spinner"><l-bouncy size="45" speed="1.75" color="black"></l-bouncy></div>
+                        :
+                        <Button label="Submit" onClick={CheckOTP} />
+                    }
                 </main>
             </div>
-
-            {loading && <div className="loading-spinner">Sending...</div>} {/* Display loading spinner */}
         </div>
     );
 }

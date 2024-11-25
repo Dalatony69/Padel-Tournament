@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Group from "./Group";
 import "../css/home_page.css";
+import { dotPulse } from 'ldrs'
+
+// Default values shown
 
 function Group_sec() {
     const [data, setData] = useState([]);
     const [fixtures, setFixtures] = useState([]);
-    const [Loading,setLoading] = useState(true);
+    const [Loading,setLoading] = useState(<l-dot-pulse size="43" speed="1.3" color="black"></l-dot-pulse>);
+    dotPulse.register()
 
     
     const NumOfGroups = useMemo(() => {
@@ -64,7 +68,7 @@ function Group_sec() {
                 setData(formattedData);
             } catch (e) {
                 console.error("Error fetching data:", e);
-                alert("There was a problem fetching the data. Please try again.");
+                // alert("There was a problem fetching the data. Please try again.");
             }
         };
 
@@ -96,7 +100,7 @@ function Group_sec() {
         fetchFixtures();
     }, []);
 
-    return <div className="group-sec">{Loading ? 'Loading' : groups}</div>;
+    return <div className="group-sec">{Loading ? Loading : groups}</div>;
 }
 
 export default Group_sec;
