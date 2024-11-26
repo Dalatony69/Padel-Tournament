@@ -75,6 +75,7 @@ function Login_card() {
             if (!response.ok) {
                 console.error('Error validating user');
                 alert('Invalid credentials. Please try again.');
+                setLoading(false);
                 return;
             }
 

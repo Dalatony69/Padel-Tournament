@@ -5,6 +5,10 @@
     height: 150vh;
     background: linear-gradient(135deg, #5f8dff, #55aaff);
     font-family: 'Arial', sans-serif;
+    background-image: url(../LayeredWavesHaikei\(Large\).svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .auth-page .holder{
     width: 30%;
@@ -114,7 +118,7 @@
 
 .auth-page {
     height: 100vh;
-    background-image: url(../);
+    background-image: url(../LayeredWavesHaikei\(Small\).svg);
 }
 
 .auth-page .holder{
