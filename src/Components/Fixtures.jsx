@@ -21,7 +21,7 @@ function Fixtures({ fixtures }) {
     const handleGame = async gameId => {
         try {
             const payload = { Team1score: team1Score, Team2score: team2Score, Gameid: gameId };
-            const response = await fetch("http://13.61.73.123:5000/SetGameScore", {
+            const response = await fetch("http://127.0.0.1:5000/SetGameScore", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)

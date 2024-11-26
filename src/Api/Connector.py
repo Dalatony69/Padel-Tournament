@@ -6,16 +6,18 @@ from mysql.connector import Error
 from flask_cors import CORS
 import json
 import itertools
+from flask_socketio import SocketIO
 
 
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000")
 
 db_config = {
-    'host': '13.61.73.123',
+    'host': '127.0.0.1',
     'database': 'sparx_schema',
-    'user': 'Dalatony_MYSQL',
-    'password': 'Elsharkawy(2005)'
+    'user': 'root',
+    'password': 'Elsharkawy'
 }
 
 def get_db_connection():
@@ -580,6 +582,33 @@ def MoveFromLobby():
         print(f"Error: {e}")
         return jsonify({'error': 'problem with switching from lobby to home'}), 500
 
+def get_updated_team_data(team1_id, team2_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    try:
+        # Get updated team information after score update
+        sql = 'SELECT team_id, team_point, team_wins, team_losses, team_played FROM team WHERE team_id IN (%s, %s)'
+        cursor.execute(sql, (team1_id, team2_id))
+        rows = cursor.fetchall()
+
+        updated_teams = []
+        for row in rows:
+            updated_teams.append({
+                'team_id': row[0],
+                'team_point': row[1],
+                'team_wins': row[2],
+                'team_losses': row[3],
+                'team_played': row[4]
+            })
+        return updated_teams
+
+    except Exception as e:
+        print(f"Error fetching updated team data: {e}")
+        return []
+    finally:
+        cursor.close()
+        connection.close()
+
 @app.route('/SetGameScore', methods=['POST'])
 def set_gamescore():
     try:
@@ -636,6 +665,13 @@ def set_gamescore():
 
                 connection.commit()
                 print(f"Winner ID: {winner_id}, Loser ID: {loser_id}")
+
+                # Get updated team data to send via WebSocket
+                updated_teams = get_updated_team_data(team1_id, team2_id)
+
+                # Emit the updated team data to all connected clients via WebSocket
+                socketio.emit('score_updated', updated_teams)
+                
             else:
                 print("No teams found for the given game ID")
 
@@ -1323,4 +1359,5 @@ def terminate():
         
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0' , port=5000)
+    # app.run(debug=True, host='0.0.0.0' , port=5000)
+    socketio.run(app, host="0.0.0.0", port=5000)

@@ -14,7 +14,7 @@ function WaitingList_Card() {
     // Fetch data for the waiting list
     const getWaiters = useCallback(async () => {
         try {
-            const response = await fetch('http://13.61.73.123:5000/WaitingList');
+            const response = await fetch('http://127.0.0.1:5000/WaitingList');
             if (!response.ok) {
                 throw new Error('Failed to fetch waiting list data');
             }
@@ -32,7 +32,7 @@ function WaitingList_Card() {
     const acceptTeam = useCallback(async (value) => {
         try {
             const teamid = { Teamid: value };
-            const response = await fetch('http://13.61.73.123:5000/AcceptTeam', {
+            const response = await fetch('http://127.0.0.1:5000/AcceptTeam', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

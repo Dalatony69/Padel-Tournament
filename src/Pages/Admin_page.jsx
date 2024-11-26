@@ -1,7 +1,7 @@
 import React,{useState,useEffect,useCallback} from "react";
 import GroupSec from '../Components/Groups_sec'
 import '../css/admin_page.css'
-import KnockoutSec from "../Components/Knockout_sec";
+// import KnockoutSec from "../Components/Knockout_sec";
 import WaitingListCard from "../Components/WaitingList_Card";
 import LobbyCard from "../Components/Lobby_Card";
 import AlertCard from "../Components/Alert_Card"
@@ -19,7 +19,7 @@ function Admin_Page(){
 
     const Restart = async() =>{
         try{
-            const response = await fetch('http://13.61.73.123:5000/Terminate');
+            const response = await fetch('http://127.0.0.1:5000/Terminate');
                 if (response) {
                     alert(response.json);
                     }
@@ -30,7 +30,7 @@ function Admin_Page(){
     }
 
     const CreateFixtures = useCallback(() => {
-        fetch("http://13.61.73.123:5000/CreateFixtures")
+        fetch("http://127.0.0.1:5000/CreateFixtures")
           .then((response) => {
             if (!response.ok) {
               throw new Error("Network response was not ok");
@@ -44,7 +44,7 @@ function Admin_Page(){
 
     const check = async() =>{
         try {
-            const response = await fetch('http://13.61.73.123:5000/LobbyOrHome');
+            const response = await fetch('http://127.0.0.1:5000/LobbyOrHome');
             const Anchor = await response.json();
             setAnchor(Anchor[0]);
         } catch (error) {
@@ -54,7 +54,7 @@ function Admin_Page(){
 
     const SetQualifiers = async() =>{
         try {
-            const response = await fetch('http://13.61.73.123:5000/SetQualifiers');
+            const response = await fetch('http://127.0.0.1:5000/SetQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -67,7 +67,7 @@ function Admin_Page(){
 
     const SetSemiQualifiers = async() =>{
         try {
-            const response = await fetch('http://13.61.73.123:5000/SetSemiQualifiers');
+            const response = await fetch('http://127.0.0.1:5000/SetSemiQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -80,7 +80,7 @@ function Admin_Page(){
 
     const SetFinalQualifiers = async() =>{
         try {
-            const response = await fetch('http://13.61.73.123:5000/SetFinalQualifiers');
+            const response = await fetch('http://127.0.0.1:5000/SetFinalQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -175,7 +175,7 @@ function Admin_Page(){
                 {Anchor === 'Home' && (
                     <>
                         <GroupSec />
-                        <KnockoutSec />
+                        {/* <KnockoutSec /> */}
                     </>
                 )}
                 {Anchor === 'Lobby' && (

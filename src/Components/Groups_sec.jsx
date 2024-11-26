@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Group from "./Group";
 import "../css/home_page.css";
-import { dotPulse } from 'ldrs'
-
-// Default values shown
+import { dotPulse } from 'ldrs';
+import io from 'socket.io-client';
 
 function Group_sec() {
     const [data, setData] = useState([]);
     const [fixtures, setFixtures] = useState([]);
-    const [Loading,setLoading] = useState(<l-dot-pulse size="43" speed="1.3" color="black"></l-dot-pulse>);
-    dotPulse.register()
+    const [loading, setLoading] = useState(true);  // Changed to a boolean flag
+    dotPulse.register();
+    const socket = io('http://127.0.0.1:5000');
 
-    
     const NumOfGroups = useMemo(() => {
         if (data.length <= 4) return 1;
         if (data.length <= 8) return 2;
@@ -19,7 +18,6 @@ function Group_sec() {
         return 4;
     }, [data.length]);
 
-    // Group the data and sort it in one pass
     const groups = useMemo(() => {
         const seq = ["A", "B", "C", "D"];
         const groupCount = NumOfGroups;
@@ -30,7 +28,6 @@ function Group_sec() {
                 .filter(item => item.group === seq[i])
                 .sort((a, b) => a.team_rank - b.team_rank);
 
-            // Pass both group data and filtered fixtures to Group
             newGroups.push(
                 <Group
                     key={seq[i]}
@@ -47,7 +44,7 @@ function Group_sec() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://13.61.73.123:5000/GetData");
+                const response = await fetch("http://127.0.0.1:5000/GetData");
                 if (!response.ok) throw new Error("Network response was not ok");
 
                 const jsonData = await response.json();
@@ -68,13 +65,12 @@ function Group_sec() {
                 setData(formattedData);
             } catch (e) {
                 console.error("Error fetching data:", e);
-                // alert("There was a problem fetching the data. Please try again.");
             }
         };
 
         const fetchFixtures = async () => {
             try {
-                const response = await fetch("http://13.61.73.123:5000/GetFixtures");
+                const response = await fetch("http://127.0.0.1:5000/GetFixtures");
                 if (!response.ok) throw new Error("Failed to fetch fixtures");
                 const jsonData = await response.json();
 
@@ -100,9 +96,36 @@ function Group_sec() {
         fetchFixtures();
     }, []);
 
-    return <div className="group-sec">{Loading ? Loading : groups}</div>;
+    useEffect(() => {
+        // WebSocket listener for score updates
+        socket.on('score_updated', (updatedTeams) => {
+            const updatedTeamsMap = updatedTeams.reduce((map, team) => {
+                map[team.team_id] = team;
+                return map;
+            }, {});
+
+            setData(prevData => prevData.map(team => {
+                const updatedTeam = updatedTeamsMap[team.team_id];
+                if (updatedTeam) {
+                    return {
+                        ...team,
+                        team_point: updatedTeam.team_point,
+                        team_wins: updatedTeam.team_wins,
+                        team_losses: updatedTeam.team_losses,
+                        team_played: updatedTeam.team_played
+                    };
+                }
+                return team;
+            }));
+        });
+
+        // Cleanup on unmount
+        return () => {
+            socket.off('score_updated');
+        };
+    }, []);
+
+    return <div className="group-sec">{loading ? <l-dot-pulse size="43" speed="1.3" color="black"></l-dot-pulse> : groups}</div>;
 }
 
 export default Group_sec;
-
-// FULLY FINISHED WAITING FOR THE DOUBLE CHECK

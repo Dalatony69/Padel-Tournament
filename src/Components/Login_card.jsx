@@ -32,7 +32,7 @@ function Login_card() {
     // Function to navigate based on response data
     const WhereTo = useCallback(async (id, Name1, Name2) => {
         try {
-            const response = await fetch('http://13.61.73.123:5000/WhereTo');
+            const response = await fetch('http://127.0.0.1:5000/WhereTo');
             const data = await response.json();
             
             if (data.message === 'Lobby') {
@@ -49,7 +49,7 @@ function Login_card() {
     // Function to fetch players and navigate to appropriate page
     const GetPlayers = useCallback(async () => {
         try {
-            const response = await fetch('http://13.61.73.123:5000/GetPlayers', {
+            const response = await fetch('http://127.0.0.1:5000/GetPlayers', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ Teamid: user.Teamid }),
@@ -67,7 +67,7 @@ function Login_card() {
         const { Teamid, Passcode } = user;
         setLoading(true);
         try {
-            const response = await fetch('http://13.61.73.123:5000/ValidateUser', {
+            const response = await fetch('http://127.0.0.1:5000/ValidateUser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ Teamid, Passcode }),
