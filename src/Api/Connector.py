@@ -11,13 +11,13 @@ from flask_socketio import SocketIO
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000")
+socketio = SocketIO(app, cors_allowed_origins="http://13.61.73.123")
 
 db_config = {
-    'host': '127.0.0.1',
+    'host': '13.61.73.123',
     'database': 'sparx_schema',
-    'user': 'root',
-    'password': 'Elsharkawy'
+    'user': 'DalatonyMYSQL',
+    'password': 'Elsharkawy(2005)'
 }
 
 def get_db_connection():
@@ -115,39 +115,45 @@ def create_user(data):
         print(f"Error: {e}")
         return jsonify({'error': 'Failed to create users'}), 500
 
-@app.route('/HandleRanking', methods=['GET'])
 def handle_ranking():
     connection = get_db_connection()
     if connection is None:
-        return jsonify({'error': 'Database connection failed'}), 500
-    
+        print("Database connection failed.")
+        return False
+
     cursor = connection.cursor()
     groups = ['A', 'B', 'C', 'D']
     
     try:
         for group_id in groups:
-            # Fetch all teams in the group along with their points
-            sql = "SELECT team_id, team_point FROM team WHERE group_id = %s"
-            values = (group_id,)
-            cursor.execute(sql, values)
+            # Fetch teams in the group with points and GD
+            sql = "SELECT team_id, team_point, team_gd FROM team WHERE group_id = %s"
+            cursor.execute(sql, (group_id,))
             result = cursor.fetchall()
             
-            # Sort the teams by their points in descending order
-            sorted_teams = sorted(result, key=lambda x: x[1], reverse=True)
+            # Sort and assign ranks
+            sorted_teams = sorted(result, key=lambda x: (x[1], x[2]), reverse=True)
+            rank_updates = [(rank, team_id) for rank, (team_id, _, _) in enumerate(sorted_teams, start=1)]
             
-            # Update each team's rank in the database based on the sorted order
-            for rank, (team_id, team_point) in enumerate(sorted_teams, start=1):
-                update_sql = "UPDATE team SET team_rank = %s WHERE team_id = %s"
-                cursor.execute(update_sql, (rank, team_id))
+            # Batch update ranks in the database
+            update_sql = "UPDATE team SET team_rank = %s WHERE team_id = %s"
+            cursor.executemany(update_sql, rank_updates)
+
+            updated_ranks = [{'team_id': team_id, 'team_rank': rank} for rank, team_id in rank_updates]
+
+            # Emit only the updated ranks
+            socketio.emit('group_ranking_updated', {'group_id': group_id, 'updated_ranks': updated_ranks})
         
         connection.commit()
+        print("Rankings updated successfully.")
+        return True
     except Exception as e:
-        print(f"Error updating ranks: {e}")
         connection.rollback()
+        print(f"Error updating ranks: {e}")
+        return False
     finally:
         cursor.close()
         connection.close()
-        return jsonify({'message': 'Ranks updated successfully for all groups'}), 200
 
 def get_newrank(groupid):
     try:
@@ -626,67 +632,62 @@ def set_gamescore():
         connection = get_db_connection()
         cursor = connection.cursor()
         try:
-            # Update the game scores
+            # Update game scores
             sql = 'UPDATE game SET game_team1score = %s, game_team2score = %s WHERE game_id = %s'
-            values = (team1_score, team2_score, data['Gameid'])
-            cursor.execute(sql, values)
+            cursor.execute(sql, (team1_score, team2_score, data['Gameid']))
             connection.commit()
 
-            # Get the team IDs
+            # Get team IDs
             team_ids = get_team(data['Gameid'])
             if team_ids:
                 team1_id, team2_id = team_ids
 
+                # Update team records based on scores
                 if team1_score > team2_score:
-                    # Team 1 wins
-                    winner_id = team1_id
-                    loser_id = team2_id
+                    winner_id, loser_id = team1_id, team2_id
                     winner_gd = team1_score - team2_score
-                    loser_gd = team2_score - team1_score
+                    loser_gd = -(team1_score - team2_score) 
                 elif team1_score < team2_score:
-                    # Team 2 wins
-                    winner_id = team2_id
-                    loser_id = team1_id
+                    winner_id, loser_id = team2_id, team1_id
                     winner_gd = team2_score - team1_score
-                    loser_gd = team1_score - team2_score
+                    loser_gd = -(team2_score - team1_score)
                 else:
-                    # Tie
-                    return jsonify({'message': 'The game ended in a tie', 'team_ids': team_ids}), 200
+                    return jsonify({'message': 'The game ended in a tie'}), 200
 
                 # Update winner's record
-                sql = 'UPDATE team SET team_point = team_point + 3, team_played = team_played + 1, team_wins = team_wins + 1, team_gd = team_gd + %s WHERE team_id = %s'
-                values = (winner_gd, winner_id)
-                cursor.execute(sql, values)
+                cursor.execute(
+                    'UPDATE team SET team_point = team_point + 3, team_played = team_played + 1, team_wins = team_wins + 1, team_gd = team_gd + %s WHERE team_id = %s',
+                    (winner_gd, winner_id)
+                )
 
                 # Update loser's record
-                sql = 'UPDATE team SET team_played = team_played + 1, team_losses = team_losses + 1, team_gd = team_gd - %s WHERE team_id = %s'
-                values = (loser_gd, loser_id)
-                cursor.execute(sql, values)
-
+                cursor.execute(
+                    'UPDATE team SET team_played = team_played + 1, team_losses = team_losses + 1, team_gd = team_gd + %s WHERE team_id = %s',
+                    (loser_gd, loser_id)
+                )
                 connection.commit()
-                print(f"Winner ID: {winner_id}, Loser ID: {loser_id}")
 
-                # Get updated team data to send via WebSocket
+                # Call ranking handler
+                handle_ranking()
+
+                # Fetch updated data for the specific teams
                 updated_teams = get_updated_team_data(team1_id, team2_id)
 
-                # Emit the updated team data to all connected clients via WebSocket
+                # Emit updated data via WebSocket
                 socketio.emit('score_updated', updated_teams)
-                
-            else:
-                print("No teams found for the given game ID")
+                print(f"Updated teams emitted: {updated_teams}")
 
-            return jsonify({'message': 'Game score updated successfully', 'team_ids': team_ids}), 200
+            return jsonify({'message': 'Game score updated successfully'}), 200
         except Exception as e:
-            print(f"Query execution error: {e}")
             connection.rollback()
+            print(f"Error during score update: {e}")
             return jsonify({'error': 'Failed to update game score'}), 500
         finally:
             cursor.close()
             connection.close()
-            handle_ranking()
     except Exception as e:
-        print(f"Database connection error: {e}")
-        return jsonify({'error': 'Database connection failed'}), 500
+        print(f"Request handling error: {e}")
+        return jsonify({'error': 'Request failed'}), 500
 
 def manage_qualifiers():
     try:

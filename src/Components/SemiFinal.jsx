@@ -22,7 +22,7 @@ function SemiFinal(props) {
 
     const HandleSemiFinal = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/ShowSemiQualifiers');
+            const response = await fetch('http://113.61.73.123:5000/ShowSemiQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -107,7 +107,7 @@ function SemiFinal(props) {
 
             <div className="L SF">
                 <main>
-                    <div dangerouslySetInnerHTML={{ __html: LSF1 || "Left Semi-Final 1" }}></div><div style={{display: VisibleLSF  ? 'block' : 'none'}}>{LSF1Score}</div>
+                    <div dangerouslySetInnerHTML={{ __html: LSF1 || "Semi-Final " }}></div><div style={{display: VisibleLSF  ? 'block' : 'none'}}>{LSF1Score}</div>
                 </main>
                 
 
@@ -124,14 +124,14 @@ function SemiFinal(props) {
                 </div>
 
                 <main style={{justifyContent: VisibleLSF  ? 'space-between' : 'end'}}>
-                    <div style={{display: VisibleLSF  ? 'block' : 'none'}}>{LSF2Score}</div><div dangerouslySetInnerHTML={{ __html: LSF2 || "Left Semi-Final 2" }}></div>
+                    <div style={{display: VisibleLSF  ? 'block' : 'none'}}>{LSF2Score}</div><div dangerouslySetInnerHTML={{ __html: LSF2 || "Semi-Final" }}></div>
                 </main>
                 
             </div>
 
             <div className="R SF">
                 <main>
-                <div dangerouslySetInnerHTML={{ __html: RSF1 || "Right Semi-Final 1" }}></div><div style={{display: VisibleRSF  ? 'block' : 'none'}}>{RSF1Score}</div>
+                <div dangerouslySetInnerHTML={{ __html: RSF1 || "Semi-Final " }}></div><div style={{display: VisibleRSF  ? 'block' : 'none'}}>{RSF1Score}</div>
                 </main>
                 
                 <button 
@@ -147,7 +147,7 @@ function SemiFinal(props) {
                 </div>
                 
                 <main style={{justifyContent: VisibleRSF  ? 'space-between' : 'end'}}>
-                    <div style={{display: VisibleRSF  ? 'block' : 'none'}}>{RSF2Score}</div><div dangerouslySetInnerHTML={{ __html: RSF2 || "Right Semi-Final 2" }}></div>
+                    <div style={{display: VisibleRSF  ? 'block' : 'none'}}>{RSF2Score}</div><div dangerouslySetInnerHTML={{ __html: RSF2 || "Semi-Final" }}></div>
                 </main>
             </div>
         </div>

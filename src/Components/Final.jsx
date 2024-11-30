@@ -16,7 +16,7 @@ function Final(props) {
 
     const HandleFinal = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/ShowFinalQualifiers');
+            const response = await fetch('http://13.61.73.123:5000/ShowFinalQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -45,7 +45,7 @@ function Final(props) {
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/Winner', {
+            const response = await fetch('http://13.61.73.123:5000/Winner', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ function Final(props) {
 
             <div className="F">
                 <main>
-                    <div dangerouslySetInnerHTML={{ __html: F1 || "Final 1" }}></div><div style={{display: VisibleF  ? 'block' : 'none'}}>{F1Score}</div>
+                    <div dangerouslySetInnerHTML={{ __html: F1 || "Final" }}></div><div style={{display: VisibleF  ? 'block' : 'none'}}>{F1Score}</div>
                 </main>
 
                 <button 
@@ -112,7 +112,7 @@ function Final(props) {
                 </div>
 
                 <main style={{justifyContent: VisibleF  ? 'space-between' : 'end'}}>
-                    <div style={{display: VisibleF  ? 'block' : 'none'}}>{F2Score}</div><div dangerouslySetInnerHTML={{ __html: F2 || "Final 1" }}></div>
+                    <div style={{display: VisibleF  ? 'block' : 'none'}}>{F2Score}</div><div dangerouslySetInnerHTML={{ __html: F2 || "Final" }}></div>
                 </main>
             </div>
         </div>

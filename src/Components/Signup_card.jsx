@@ -89,7 +89,7 @@ function Signup_card() {
 
         try {
             setLoading(true);
-            const response = await fetch('http://127.0.0.1:5000/HandleSignUp', {
+            const response = await fetch('http://13.61.73.123:5000/HandleSignUp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newUser),
@@ -128,7 +128,7 @@ function Signup_card() {
     // Handle where to navigate based on backend response
     const WhereTo = async (Teamid) => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/WhereTo');
+            const response = await fetch('http://13.61.73.123:5000/WhereTo');
             const data = await response.json();
             if (data.message === 'Lobby') {
                 navigate('/Lobby', { state: { Teamid, ...user } });

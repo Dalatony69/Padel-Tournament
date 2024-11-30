@@ -4,13 +4,12 @@
     box-sizing: border-box;
 }
 
-
 .settings{
     display: flex;
     width: 90%;
     flex-direction: column;
     height: 100vh;
-    margin: 80% auto;
+    margin: 0% auto;
     border-top: 2px solid black;
 }
 .settings .title{
@@ -19,14 +18,17 @@
     place-items: center;
     flex: 2;
     font-weight: bolder;
-    font-size: 30px;
-    text-shadow: 0 0 30px black;
+    font-size: 40px;
 }
 .settings .holder{
     flex: 8;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: rgba(140, 138, 255, 0.151);
+    padding: 3%;
+    border-radius: 20px;
+    border: 5px solid black;
 }
 .settings .holder .cat{
     display: flex;
@@ -41,7 +43,6 @@
     flex: 2;
     margin-right: 5%;
     display: inline-block;
-    box-shadow: inset 0 0 10px black;
     background-color: #5f8dff;
     color: aliceblue;
     font-weight: bolder;

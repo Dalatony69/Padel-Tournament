@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import Modal from "../Components/Modal"; // Import the Modal component
 import { useLocation } from "react-router-dom";
 import AlertCard from "./Alert_Card";
+import Swal from 'sweetalert2'
 
 
 function Fixtures({ fixtures }) {
-    const [AlertVisible, setAlertVisible] = useState(false);
-    const [AlertHeader,setAlertHeader] = useState('');
-    const [AlertType,setAlertType] = useState('');
+
     const [visible, setVisible] = useState(false);
     const [team1Score, setTeam1Score] = useState("");
     const [team2Score, setTeam2Score] = useState("");
@@ -18,10 +17,20 @@ function Fixtures({ fixtures }) {
     const loserColor = "#B81D1344";
     const winnerColor = "#00845044";
 
+    const handleAlert = ()=>{
+        Swal.fire({
+            position: "top",
+            icon: "success",
+            title: "Match Submitted Sucessfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+    }
+
     const handleGame = async gameId => {
         try {
             const payload = { Team1score: team1Score, Team2score: team2Score, Gameid: gameId };
-            const response = await fetch("http://127.0.0.1:5000/SetGameScore", {
+            const response = await fetch("http://13.61.73.123:5000/SetGameScore", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
@@ -29,10 +38,7 @@ function Fixtures({ fixtures }) {
 
             if (!response.ok) throw new Error("Failed to update game score");
 
-            setAlertHeader('Match Submitted Successfully');
-            setAlertType('GREEN');
-            setAlertVisible(true);
-            setEditGameId(null);
+            handleAlert();
         } catch (error) {
             console.error("Error updating game score:", error);
         }
@@ -41,14 +47,12 @@ function Fixtures({ fixtures }) {
     return (
         <div className="Fixtures">
 
-            {AlertVisible && <AlertCard Header={AlertHeader} Type={AlertType}/>}
-
             <div>
                 <button onClick={() => setVisible(!visible)}>
                     {visible ? "Hide" : "Show"} Results
                 </button>
             </div>
-
+            
             <Modal isVisible={visible} onClose={() => setVisible(false)} className="modal-container">
                 {fixtures.map(fixture => {
                     const isEditing = editGameId === fixture.game_id;
@@ -89,7 +93,7 @@ function Fixtures({ fixtures }) {
                                         // Show Edit Button only if the match is unplayed
                                         <button onClick={() => setEditGameId(fixture.game_id)}>Edit</button>
                                     )}
-                                    {!isEditing && !isAdminRoute &&(
+                                    {!isUnplayedMatch &&(
                                         // Show scores only if the match is played
                                         <div className="score-team">
                                             <div>{fixture.team1_score}</div>

@@ -8,7 +8,7 @@ function Lobby_Card() {
     // Fetch data for the lobby players
     const getPlayers = useCallback(async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/LobbyData');
+            const response = await fetch('http://13.61.73.123:5000/LobbyData');
             if (!response.ok) {
                 throw new Error('Failed to fetch lobby data');
             }
