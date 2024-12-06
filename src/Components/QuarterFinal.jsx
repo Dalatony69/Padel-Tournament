@@ -33,7 +33,7 @@ function QuarterFinal(props) {
 
     const HandleQuarterFinal = async () => {
         try {
-            const response = await fetch('http://13.61.73.123:5000/ShowQualifiers');
+            const response = await fetch('http://127.0.0.1:5000/ShowQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -79,7 +79,7 @@ function QuarterFinal(props) {
         };
 
         try {
-            const response = await fetch('http://13.61.73.123:5000/QualifySemi', {
+            const response = await fetch('http://127.0.0.1:5000/QualifySemi', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ function QuarterFinal(props) {
         // Define the async function inside useEffect
         const checkquarter = async () => {
             try {
-                const response = await fetch('http://13.61.73.123:5000/CheckSettingQuarter');
+                const response = await fetch('http://127.0.0.1:5000/CheckSettingQuarter');
                 const data = await response.json(); // Assuming the backend returns JSON
 
                 if (data['message'] === 'Yes') {

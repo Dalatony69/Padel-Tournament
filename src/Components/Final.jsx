@@ -16,7 +16,7 @@ function Final(props) {
 
     const HandleFinal = async () => {
         try {
-            const response = await fetch('http://13.61.73.123:5000/ShowFinalQualifiers');
+            const response = await fetch('http://127.0.0.1:5000/ShowFinalQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -45,7 +45,7 @@ function Final(props) {
         };
 
         try {
-            const response = await fetch('http://13.61.73.123:5000/Winner', {
+            const response = await fetch('http://127.0.0.1:5000/Winner', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -7,7 +7,7 @@ import Lobby_Card from '../Components/Lobby_Card';
 function Lobby_page() {
     const [state, setState] = useState({
         data: [],
-        isWaiting: true,
+        isWaiting: false,
         teamId: null
     });
 
@@ -35,7 +35,7 @@ function Lobby_page() {
 
     const fetchData = useCallback(async () => {
         try {
-            const response = await fetch('http://13.61.73.123:5000/GetData');
+            const response = await fetch('http://127.0.0.1:5000/GetData');
             const teamsData = await response.json();
 
             setState((prevState) => ({

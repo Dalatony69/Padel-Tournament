@@ -9,7 +9,7 @@ function Group_sec() {
     const [fixtures, setFixtures] = useState([]);
     const [loading, setLoading] = useState(true);  // Changed to a boolean flag
     dotPulse.register();
-    const socket = io('http://13.61.73.123:5000');
+    const socket = io('http://127.0.0.1:5000');
 
     const NumOfGroups = useMemo(() => {
         if (data.length <= 4) return 1;
@@ -45,7 +45,7 @@ function Group_sec() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://13.61.73.123:5000/GetData");
+                const response = await fetch("http://127.0.0.1:5000/GetData");
                 if (!response.ok) throw new Error("Network response was not ok");
 
                 const jsonData = await response.json();
@@ -71,7 +71,7 @@ function Group_sec() {
 
         const fetchFixtures = async () => {
             try {
-                const response = await fetch("http://13.61.73.123:5000/GetFixtures");
+                const response = await fetch("http://127.0.0.1:5000/GetFixtures");
                 if (!response.ok) throw new Error("Failed to fetch fixtures");
                 const jsonData = await response.json();
 

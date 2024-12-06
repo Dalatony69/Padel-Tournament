@@ -11,13 +11,13 @@ from flask_socketio import SocketIO
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="http://13.61.73.123")
+socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000")
 
 db_config = {
-    'host': '13.61.73.123',
+    'host': '127.0.0.1',
     'database': 'sparx_schema',
-    'user': 'DalatonyMYSQL',
-    'password': 'Elsharkawy(2005)'
+    'user': 'root',
+    'password': 'Elsharkawy'
 }
 
 def get_db_connection():

@@ -22,7 +22,7 @@ function SemiFinal(props) {
 
     const HandleSemiFinal = async () => {
         try {
-            const response = await fetch('http://113.61.73.123:5000/ShowSemiQualifiers');
+            const response = await fetch('http://127.0.0.1:5000/ShowSemiQualifiers');
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
@@ -57,7 +57,7 @@ function SemiFinal(props) {
         };
 
         try {
-            const response = await fetch('http://13.61.73.123:5000/QualifyFinal', {
+            const response = await fetch('http://127.0.0.1:5000/QualifyFinal', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
